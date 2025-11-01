@@ -14,12 +14,13 @@ public class StyleUtil {
         + "%s `%s` does not have proper capitalization or alphabetical name.";
 
     /**
+     * Separates the text into words based on spaces or certain special characters.
      * Tests if for each word, it either has no letters, or the first letter character that appears is capitalized
      * with following letters that are not capitalized.
      */
     public static boolean isCapitalizedWithLetters(String trimmedText) {
         final String regex = "([^a-zA-Z]*[A-Z][^A-Z]*)|([^a-zA-Z]*)";
-        String[] words = trimmedText.split(" ");
+        String[] words = trimmedText.split("[ \\-,/()]"); // Does not include apostrophe, e.g. John's.
         return Arrays.stream(words).allMatch(w -> w.matches(regex));
     }
 

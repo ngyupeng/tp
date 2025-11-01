@@ -15,11 +15,14 @@ CCAmper is the perfect app for **Singaporean secondary school teachers** as an a
 - Managing all your various CCA student details plus emergency contact details
 - Keeping track of their attendance with respect to various events
 
-CCAmper is optimized for use via a
-<tooltip content="Command Line Interface">**CLI**</tooltip> to help secondary school teachers to
-**plan, manage, and simplify** your CCA's weekly tasks faster than traditional
-<tooltip content="Graphical User Interface">GUI</tooltip> apps.
+CCAmper is optimized for use via a **Command Line Interface (CLI)** to help secondary school teachers to
+**plan, manage, and simplify** your CCA's weekly tasks faster than traditional **Graphical User Interface (GUI)** apps.
 
+<box type="info" seamless>
+
+**Advanced keyboard technique:** Use `tab` to switch between the input box, person list, and event list!<br>
+While focused on the person list or event list, use `up` and `down` to navigate quickly.
+</box>
 
 ## Quick start
 
@@ -57,15 +60,20 @@ about the corresponding item in `DetailedPanel`.
 
 **Notes about the syntax and command format:**<br>
 
+* Prefixes start with letters followed by a slash, e.g. `n/`.<br>
+  Certain prefixes are reserved for each command, meaning that it is not possible to
+  supply a string starting with the reserved prefix to another prefix. Workaround is to use other characters.
+  * e.g. `a/FRONT n/MIDDLE BACK` is parsed as two separate prefixes.<br><br>
+    
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in **square brackets** are optional.<br>
   * e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-  * e.g `n/NAME [enroll/[YEAR]]` can be used as `n/John enroll/` or as `n/John enroll/2024` or as `n/John`.
+  * e.g `n/NAME [enroll/[YEAR]]` can be used as `n/John enroll/` or as `n/John enroll/2024` or as `n/John`.<br><br>
 
 * Items with `…` after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…` can be empty, `t/friend`, `t/friend family` etc.
+  e.g. `[t/TAG]…` can be empty, `t/friend`, `t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -104,12 +112,12 @@ about the corresponding item in `DetailedPanel`.
   These do not throw an error, but will display a warning message after the command finishes execution,<br>
   and during launch of the program.
 
-| Field                 | Style Guide                                                                                                              |
-|-----------------------|:-------------------------------------------------------------------------------------------------------------------------|
-| Name                  | • Proper capitalization<br/>• No consecutive spaces<br/>• Brackets close, e.g. `John (Doe` is not stylish                |
-| Address               | • Proper capitalization                                                                                                  |
-| Roles                 | • Proper capitalization<br/>• No consecutive spaces                                                                      |
-| Emergency<br/>Contact | • Name field has the same recommendations as specified above.<br/>• Name field should be different from student's name.  |
+| Field                 | Style Guide                                                                                                                                                                                                                     |
+|-----------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name                  | • Proper capitalization (First letter of each word is capitalized)<br/> e.g. `Al-Amaan`, `John's Dad` is proper, but `john`, `Bob(f)` is not.<br/>• No consecutive spaces<br/>• Brackets close, e.g. `John (Doe` is not stylish |
+| Address               | • Proper capitalization                                                                                                                                                                                                         |
+| Roles                 | • Proper capitalization<br/>• No consecutive spaces                                                                                                                                                                             |
+| Emergency<br/>Contact | • Name field has the same recommendations as specified above.<br/>• Name field should be different from student's name.                                                                                                         |
 
 </box>
 
@@ -137,7 +145,7 @@ A popup appears which redirects the user to this current page. :D
 
 Add students to your address book, with the given fields.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/ROLE]…​ [t/TAG]…​ [pin/TRUE] [enroll/YEAR] [ecn/EMERGENCY_NAME] [ecp/EMERGENCY_PHONE]`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/ROLE]…​ [t/TAG]… [pin/TRUE] [enroll/YEAR] [ecn/EMERGENCY_NAME] [ecp/EMERGENCY_PHONE]`
 
 Additional information on fields:
 * While one may key in phone numbers with hyphen(s) and/or space(s) to improve human-readability, the hyphen(s) and space(s) are automatically removed when phone number is stored in app.
@@ -152,7 +160,7 @@ Note:
  
 <box type="tip">
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** Refer to the constraints specified above for each of the fields!
 </box>
 
 <br>
@@ -389,7 +397,7 @@ CCAmper data are saved in the hard disk automatically after any command that cha
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/CCAmper.json`.
+AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`.
 <br>Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning">
@@ -432,7 +440,7 @@ Action     | Format, Examples
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/ROLE]…​ [t/TAG]…​ [pin/TRUE] [enroll/YEAR] [ecn/EMERGENCY_NAME] [ecp/EMERGENCY_PHONE]` <br> e.g., `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/president r/camp leader ecn/Jack Doe ecp/99998888 enroll/2022 t/friend`
 **List** | `list`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/ROLE]…​ [t/TAG]…​ [pin/(TRUE/FALSE)] [enroll/[YEAR]] [ecn/EMERGENCY_NAME] [ecp/EMERGENCY_PHONE]`<br> e.g.,`edit 1 n/John p/98765432 e/johndoe@example.com a/New Place r/Senior Student t/experienced pin/TRUE enroll/2022 ecn/Sally ecp/88887777`
-**Find** | `find [n/KEYWORD [MORE_KEYWORDS]] [t/KEYWORD [MORE_KEYWORDS]] [enroll/[(<\|<=\|>\|>=\|=)NUMBER]] [r/SUBSTRING]…​`<br> e.g., `find n/yu john enroll/>=2022 r/lead r/sec`
+**Find** | `find [n/KEYWORD [MORE_KEYWORDS]] [t/KEYWORD [MORE_KEYWORDS]] [enroll/[(<\|<=\|>\|>=\|=)NUMBER]] [r/KEYWORD]…`<br> e.g., `find n/yu john enroll/>=2022 r/lead r/sec`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Consolidate** | `consolidate`
 **Clear**  | `clear`

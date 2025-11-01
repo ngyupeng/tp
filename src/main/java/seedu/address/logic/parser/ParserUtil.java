@@ -58,6 +58,21 @@ public class ParserUtil {
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
+     * Checks for style guide and appends a warning to the user.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static Name parseNameWithWarning(String name) throws ParseException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        Name result = parseName(trimmedName);
+        MessageCenter.appendEnd(Name.getStyleWarningMessage(trimmedName));
+        return result;
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code name} is invalid.
      */
@@ -66,8 +81,6 @@ public class ParserUtil {
         String trimmedName = name.trim();
         if (!Name.isValidName(trimmedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
-        } else {
-            MessageCenter.appendEnd(String.format(Name.getStyleWarningMessage(name), name));
         }
         return new Name(trimmedName);
     }
@@ -97,13 +110,26 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code address} is invalid.
      */
+    public static Address parseAddressWithWarning(String address) throws ParseException {
+        requireNonNull(address);
+        String trimmedAddress = address.trim();
+        Address result = parseAddress(trimmedAddress);
+        MessageCenter.appendEnd(Address.getStyleWarningMessage(trimmedAddress));
+        return result;
+    }
+
+    /**
+     * Parses a {@code String address} into an {@code Address}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code address} is invalid.
+     */
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
-        MessageCenter.appendEnd(Address.getStyleWarningMessage(address));
         return new Address(trimmedAddress);
     }
 
@@ -241,12 +267,13 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code name} is invalid.
      */
-    public static EventName parseEventName(String name) throws ParseException {
+    public static EventName parseEventNameWithWarning(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!EventName.isValidName(trimmedName)) {
             throw new ParseException(EventName.MESSAGE_CONSTRAINTS);
         }
+        MessageCenter.appendEnd(EventName.getStyleWarningMessage(trimmedName));
         return new EventName(trimmedName);
     }
 

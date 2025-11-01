@@ -44,7 +44,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DURATION, PREFIX_DESCRIPTION);
-        EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get());
+        EventName name = ParserUtil.parseEventNameWithWarning(argMultimap.getValue(PREFIX_NAME).get());
         Duration duration = ParserUtil.parseDuration(argMultimap.getValue(PREFIX_DURATION).get());
         Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).orElse(""));
         Attendance attendance = new Attendance();

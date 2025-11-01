@@ -2,6 +2,12 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_BRACKET_NOT_CLOSED;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_CONSECUTIVE_SPACES;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_INCORRECT_CAPITALIZATION;
+import static seedu.address.commons.util.StyleUtil.hasBalancedBrackets;
+import static seedu.address.commons.util.StyleUtil.hasConsecutiveSpaces;
+import static seedu.address.commons.util.StyleUtil.isCapitalizedWithLetters;
 
 /**
  * Represents an Event's name in the event manager.
@@ -34,6 +40,28 @@ public class EventName {
      */
     public static boolean isValidName(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns a message containing details about not following the recommend style format.
+     * Does not throw an error.
+     */
+    public static String getStyleWarningMessage(String test) {
+        StringBuilder styleWarning = new StringBuilder();
+
+        if (hasConsecutiveSpaces(test)) {
+            styleWarning.append(
+                    String.format(MESSAGE_CONSECUTIVE_SPACES, "Event name", test));
+        }
+        if (!hasBalancedBrackets(test)) {
+            styleWarning.append(
+                    String.format(MESSAGE_BRACKET_NOT_CLOSED, "Event name", test));
+        }
+        if (!isCapitalizedWithLetters(test)) {
+            styleWarning.append(
+                    String.format(MESSAGE_INCORRECT_CAPITALIZATION, "Event name", test));
+        }
+        return styleWarning.toString();
     }
 
     @Override

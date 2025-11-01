@@ -16,6 +16,7 @@ import seedu.address.model.event.Duration;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.PersonReference;
+import seedu.address.model.person.Name;
 
 /**
  * Removes the list of persons to the attendance list of an event.
@@ -70,8 +71,8 @@ public class UnattendCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
-        Event event = model.getFilteredEventList().get(eventIndex.getZeroBased());
-        Attendance attendance = event.getAttendance();
+        Event eventToEdit = model.getFilteredEventList().get(eventIndex.getZeroBased());
+        Attendance attendance = eventToEdit.getAttendance();
         List<PersonReference> personList = attendance.asUnmodifiableList();
         List<PersonReference> personsToRemove = new ArrayList<>();
 
@@ -83,9 +84,14 @@ public class UnattendCommand extends Command {
             }
         }
 
-        Event editedEvent = createEditedEvent(event, personsToRemove);
-        model.setEvent(event, editedEvent);
+        // Convert to names to display text result of names added.
+        List<Name> names = personsToRemove.stream()
+                .map(PersonReference::getName)
+                .toList();
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, personsToRemove));
+        Event editedEvent = createEditedEvent(eventToEdit, personsToRemove);
+        model.setEvent(eventToEdit, editedEvent);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, names));
     }
 }

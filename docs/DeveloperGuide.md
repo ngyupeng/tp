@@ -384,6 +384,10 @@ Use case ends.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: Personal contact details that should be hidden, including phone numbers, year of study.
 * **AddressBook**: Our product that allows CCA teachers to handle students’ contacts
+* **Co-curricular Activities (CCA)**: Non-academic activities (sports, arts, uniform groups, etc) held at schools
+  that fosters holistic growth
+* **Command Line Interface (CLI)**: Text-based user interface that allows inputting text commands to perform actions.
+* **Graphical User Interface (GUI)**: Relies on visual elements and clicking to allow users to perform actions.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Planned Enhancements**

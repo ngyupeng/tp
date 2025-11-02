@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.MessageCenter;
 import seedu.address.model.event.Attendance;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Duration;
@@ -65,6 +66,7 @@ class JsonAdaptedEvent {
         if (!EventName.isValidName(name)) {
             throw new IllegalValueException(EventName.MESSAGE_CONSTRAINTS);
         }
+        MessageCenter.appendEnd(EventName.getStyleWarningMessage(name));
         final EventName modelName = new EventName(name);
 
         if (duration == null) {

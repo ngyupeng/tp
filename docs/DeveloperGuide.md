@@ -181,7 +181,7 @@ A person will only be displayed on the list if it satisfies all the predicates w
 
 Given below is an example usage scenario and how the finding mechanism behaves at each step.
 
-Step 1. The user enters a valid `find` command with various options: E.g. `n/alex t/student enroll/>0`
+Step 1. The user enters a valid `find` command with various options: E.g. `n/alex t/student enroll/>2023`
 
 Step 2. This input is parsed by the `FindCommandParser` which for each option creates its own custom `Predicate<Person>`, such as `NameContainsKeywordsPredicate`, `TagsContainKeywordsPredicate`, `RolesContainSubstringsPredicate` and `EnrollmentYearPredicate`.
 

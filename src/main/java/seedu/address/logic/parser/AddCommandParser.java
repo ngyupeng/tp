@@ -115,10 +115,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(compilationOfErrorMessage);
         }
 
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        Name name = ParserUtil.parseNameWithWarning(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+        Address address = ParserUtil.parseAddressWithWarning(argMultimap.getValue(PREFIX_ADDRESS).get());
         Pin pin = ParserUtil.parsePin(argMultimap.getValue(PREFIX_PIN).isPresent()
                 ? argMultimap.getValue(PREFIX_PIN).get()
                 : "false");

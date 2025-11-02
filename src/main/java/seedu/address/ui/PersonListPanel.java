@@ -55,6 +55,9 @@ public class PersonListPanel extends UiPart<Region> {
                 .selectedItemProperty()
                 .addListener((obs, old, newPerson) -> {
                     selectedPerson.setValue(newPerson);
+                    if (newPerson != null) {
+                        personListView.requestFocus();
+                    }
                 });
     }
 

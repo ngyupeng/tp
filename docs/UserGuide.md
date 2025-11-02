@@ -409,12 +409,6 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Planned updates
-
-1. We are planning to integrate an **event list**, which can be used to keep track of weekly session attendance of students.
-
---------------------------------------------------------------------------------------------------------------------
-
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>

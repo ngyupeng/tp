@@ -47,7 +47,7 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 AddressBook *--> "1" UniquePersonList
 AddressBook *--> "1" UniqueEventList
 UniquePersonList --> "~* all" Person
-UniqueEventList ---> "~* all\n" Event
+UniqueEventList ---> "    ~* all" Event
 Person *--> Name
 Person *--> Phone
 Person *--> Email
@@ -73,5 +73,5 @@ EDuration -[hidden]down-> EDescription
 EDescription -[hidden]down-> EAttendance
 
 ModelManager --> "~* filtered" Person
-ModelManager --> "  ~* filtered" Event
+ModelManager --> "~* filtered\n" Event
 @enduml

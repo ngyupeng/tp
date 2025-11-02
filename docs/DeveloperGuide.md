@@ -281,7 +281,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC1. Delete a person**
 
-- **MSS**
+- **Main Success Scenario (MSS)**
 1.  User views list of persons (UC3)
 2.  User requests to delete a specific person in the list
 3.  AddressBook deletes the person
@@ -388,6 +388,7 @@ Use case ends.
   that fosters holistic growth
 * **Command Line Interface (CLI)**: Text-based user interface that allows inputting text commands to perform actions.
 * **Graphical User Interface (GUI)**: Relies on visual elements and clicking to allow users to perform actions.
+* **Main Success Scenario (MSS)**: Outlines the most straightforward interaction under the use case.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Planned Enhancements**

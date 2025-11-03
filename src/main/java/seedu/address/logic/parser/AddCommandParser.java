@@ -135,7 +135,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                     enrollmentYear);
             return new AddCommand(person);
         } catch (IllegalArgumentException e) {
-            throw new ParseException(compilationOfErrorMessage + e.getMessage());
+            throw new ParseException(e.getMessage());
         }
     }
 

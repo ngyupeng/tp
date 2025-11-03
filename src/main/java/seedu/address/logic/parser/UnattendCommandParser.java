@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
@@ -34,7 +33,6 @@ public class UnattendCommandParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UnattendCommand parse(String args) throws ParseException {
-        requireNonNull(args);
         try {
             ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON, PREFIX_EVENT);
 

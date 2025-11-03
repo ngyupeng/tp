@@ -96,7 +96,9 @@ public class ParserUtil {
 
         String trimmedPhone = phone.trim();
         String rawNumber = Phone.convertRawFormat(trimmedPhone);
-
+        if (!Phone.isValidPhone(trimmedPhone)) {
+            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+        }
         if (Phone.hasWarning(rawNumber)) {
             MessageCenter.appendEnd(Phone.createWarningMessage(rawNumber));
         }

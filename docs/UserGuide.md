@@ -426,6 +426,7 @@ In the future, we can just simplify the UI to only show consolidated information
 Currently, if either phone number and/or emergency phone number is empty after removing spaces and hyphens, 
 the user will receive an error message that states "Phone number cannot be empty after removing spaces and hyphens."
 This is currently not a major priority, since users can easily locate the source(s) of errors by checking up to 2 fields only.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ

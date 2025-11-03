@@ -191,7 +191,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/ROLE]…​ [t/T
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 * Editing roles follows the same rules as editing tags.
-* The pin field takes in either "TRUE" or "FALSE"
+* The pin field takes in either "TRUE" or "FALSE".
 * If the student has no emergency contact, then both emergency contact fields (`ecn` and `ecp`) must be either both provided or not at all.
 * The enrollment year should be a positive integer or empty string (to delete)
 
@@ -254,6 +254,7 @@ Format: `add:event n/NAME d/(d/M/yyyy or d/M/yyyy-d/M/yyyy) [info/DESCRIPTION]`
 
 Examples:
 * `add:event n/meeting d/1/10/2025 info/routine meeting`
+* `add:event n/competition d/1/10/2025-5/10/2025 info/important competition`
 
 <box type="definition">
 

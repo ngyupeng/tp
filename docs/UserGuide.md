@@ -258,7 +258,7 @@ Examples:
 <box type="tip">
 
 **Note:**
-`d/M/yyyy` means that the date must have four digits for the year and have 1 or 2 digits for the day or month. E.g. `1/5/20205`, `15/3/2012` and `12/2/2019`.
+`d/M/yyyy` means that the date must have four digits for the year and have 1 or 2 digits for the day or month. E.g. `1/5/20205`, `15/3/2012`, `1/10/2025` and `12/2/2019`.
 </box>
 
 <box type="definition">

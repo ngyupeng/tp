@@ -288,8 +288,11 @@ public class ParserUtil {
     public static Duration parseDuration(String duration) throws ParseException {
         requireNonNull(duration);
         String trimmedDuration = duration.trim();
-        if (!Duration.isValidDuration(trimmedDuration)) {
+        if (!Duration.isValidDates(trimmedDuration)) {
             throw new ParseException(Duration.MESSAGE_CONSTRAINTS);
+        }
+        if (!Duration.isValidDuration(trimmedDuration)) {
+            throw new ParseException(Duration.MESSAGE_CONSTRAINTS_RANGE);
         }
         return new Duration(trimmedDuration);
     }

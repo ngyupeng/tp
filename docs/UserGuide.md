@@ -101,6 +101,7 @@ about the corresponding item in `DetailedPanel`.
 
 **Duplicate handling**
 * We require that no two persons have the exact same `Name` and `Phone` combination.
+* We require that no two events have the exact same `Name` and `Duration` combination.
 
 </box>
 

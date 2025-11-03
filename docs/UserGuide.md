@@ -255,6 +255,12 @@ Format: `add:event n/NAME d/(d/M/yyyy or d/M/yyyy-d/M/yyyy) [info/DESCRIPTION]`
 Examples:
 * `add:event n/meeting d/1/10/2025 info/routine meeting`
 
+<box type="tip">
+
+**Note:**
+`d/M/yyyy` means that the date must have four digits for the year and have 1 or 2 digits for the day or month. E.g. `1/5/20205`, `15/3/2012` and `12/2/2019`.
+</box>
+
 <box type="definition">
 
 **Note:**

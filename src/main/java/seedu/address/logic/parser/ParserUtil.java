@@ -34,6 +34,7 @@ public class ParserUtil {
     public static final String MESSAGE_EMPTY_INDEX = "Expecting an index, but no index specified.";
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_EXCEEDS_INTEGER_LIMIT = "Index exceeds integer limit of 2147483647.";
+    public static final String MESSAGE_DUPLICATE_INDEX = "Expecting one index, but multiple specified.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -44,6 +45,9 @@ public class ParserUtil {
         String trimmedIndex = oneBasedIndex.trim();
         if (oneBasedIndex.isEmpty()) {
             throw new ParseException(MESSAGE_EMPTY_INDEX);
+        }
+        if (trimmedIndex.split(" ").length > 1) {
+            throw new ParseException(MESSAGE_DUPLICATE_INDEX);
         }
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             if (!trimmedIndex.isEmpty() && StringUtil.isExceedsIntegerLimit(trimmedIndex)) {

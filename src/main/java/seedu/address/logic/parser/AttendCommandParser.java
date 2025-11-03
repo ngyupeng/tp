@@ -1,11 +1,13 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.logic.parser.ParserUtil.parseIndex;
 import static seedu.address.logic.parser.ParserUtil.parseIndexes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -32,16 +34,31 @@ public class AttendCommandParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AttendCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON, PREFIX_EVENT);
+        requireNonNull(args);
+        try {
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON, PREFIX_EVENT);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PERSON, PREFIX_EVENT)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE));
+            List<String> prefixes = new ArrayList<>();
+            if (!arePrefixesPresent(argMultimap, PREFIX_PERSON)) {
+                prefixes.add(PREFIX_PERSON.getPrefix());
+            }
+            if (!arePrefixesPresent(argMultimap, PREFIX_EVENT)) {
+                prefixes.add(PREFIX_EVENT.getPrefix());
+            }
+            if (!prefixes.isEmpty()) {
+                throw new ParseException(
+                        String.format(AddCommandParser.MESSAGE_MISSING_COMPULSORY_PREFIX,
+                                String.join(", ", prefixes)));
+            }
+
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PERSON, PREFIX_EVENT);
+
+            Index eventIndex = parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
+            List<Index> personIndexes = parseIndexes(argMultimap.getValue(PREFIX_PERSON).get());
+            return new AttendCommand(eventIndex, personIndexes);
+        } catch (ParseException pe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE), pe);
         }
-
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PERSON, PREFIX_EVENT);
-
-        Index eventIndex = parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
-        List<Index> personIndexes = parseIndexes(argMultimap.getValue(PREFIX_PERSON).get());
-        return new AttendCommand(eventIndex, personIndexes);
     }
 }

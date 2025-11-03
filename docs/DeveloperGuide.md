@@ -13,7 +13,8 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is a brownfield project based on the [AddressBook-Level3](https://se-education.org/addressbook-level3/)
+project created by the [SE-EDU](https://se-education.org/).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -128,7 +129,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="800" />
 
 
 The `Model` component,
@@ -384,6 +385,7 @@ Use case ends.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: Personal contact details that should be hidden, including phone numbers, year of study.
 * **AddressBook**: Our product that allows CCA teachers to handle students’ contacts
+* **Brownfield project**: Our product that is developed and deployed upon an existing product.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Planned Enhancements**

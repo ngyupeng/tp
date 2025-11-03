@@ -8,7 +8,7 @@
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       styleClass="pane-with-border">
-  <HBox fx:id="eventHeader" maxWidth="Infinity" prefWidth="Infinity" VBox.vgrow="NEVER">
+  <HBox fx:id="eventHeader" minHeight="-Infinity" VBox.vgrow="NEVER">
     <Label fx:id="eventName"
            text="\$name"
            styleClass="event-selected-student-header"

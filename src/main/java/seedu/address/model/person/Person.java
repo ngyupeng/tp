@@ -20,7 +20,7 @@ import seedu.address.model.tag.Tag;
 public class Person {
 
     public static final String EMERGENCY_MESSAGE_CONSTRAINTS =
-            "Emergency contact must be either not provided, or contain both name and phone.";
+            "Emergency contact must be either not provided, or contain both name and phone (ecn/ and ecp/).";
     public static final String EMERGENCY_NUMBER_MESSAGE_CONSTRAINTS =
             "Emergency contact's phone number should not be the same as this person's.";
     public static final String EMERGENCY_NAME_WARNING =

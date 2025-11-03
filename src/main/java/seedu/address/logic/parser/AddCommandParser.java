@@ -35,8 +35,8 @@ import seedu.address.model.tag.Tag;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
-    public static final String MESSAGE_MISSING_COMPULSORY_PREFIX = "Missing compulsory prefixes: %s. ";
-    public static final String MESSAGE_MISSING_FIRST_PREFIX = "There is an input without prefix after 'add'. ";
+    public static final String ERROR_MESSAGE_MISSING_COMPULSORY_PREFIX = "Missing compulsory prefixes: %s. ";
+    public static final String ERROR_MESSAGE_MISSING_FIRST_PREFIX = "There is an input without prefix after 'add'. ";
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
@@ -53,14 +53,14 @@ public class AddCommandParser implements Parser<AddCommand> {
                 .map(Prefix::toString)
                 .collect(Collectors.joining(", "));
         if (!missingPrefix.isEmpty()) {
-            return String.format(MESSAGE_MISSING_COMPULSORY_PREFIX, missingPrefix);
+            return String.format(ERROR_MESSAGE_MISSING_COMPULSORY_PREFIX, missingPrefix);
         }
         return "";
     }
 
     private static String checkUntokenInput(ArgumentMultimap argMultimap) {
         if (haveUntokenInput(argMultimap)) {
-            return MESSAGE_MISSING_FIRST_PREFIX;
+            return ERROR_MESSAGE_MISSING_FIRST_PREFIX;
         }
         return "";
     }

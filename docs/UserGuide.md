@@ -20,8 +20,9 @@ CCAmper is optimized for use via a **Command Line Interface (CLI)** to help seco
 
 <box type="info" seamless>
 
-**Advanced keyboard technique:** Use `tab` to switch between the input box, person list, and event list!<br>
-While focused on the person list or event list, use `up` and `down` to navigate quickly.
+**Advanced keyboard technique:** Use `tab` to switch between the input command box, person list, and event list!<br>
+While focused on the person list or event list, use `left` and `right` to navigate between the lists,<br>
+and `up` and `down` to navigate within the list.
 </box>
 
 ## Quick start

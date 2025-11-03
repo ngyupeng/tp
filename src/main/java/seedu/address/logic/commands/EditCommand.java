@@ -98,8 +98,7 @@ public class EditCommand extends Command {
         Set<Role> updatedRoles = editPersonDescriptor.getRoles().orElse(personToEdit.getRoles());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        EmergencyContact editEmergencyContact =
-                editPersonDescriptor.getEmergencyContact().orElse(new EmergencyContact());
+        EmergencyContact editEmergencyContact = editPersonDescriptor.getEmergencyContact().orElse(null);
         EmergencyContact updatedEmergencyContact = personToEdit.getEmergencyContact().merge(editEmergencyContact);
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPin,

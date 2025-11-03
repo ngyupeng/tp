@@ -90,8 +90,8 @@ about the corresponding item in `DetailedPanel`.
 | Field                 | Requirements                                                                                                                                                                                                                                                                                         |
 |-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Name                  | • Max 50 characters long.<br/>• Letters, numbers, and spaces and the following `.,-'()/` only.<br>• Cannot be blank                                                                                                                                                                                   |
-| Phone                 | • Encouraged input format: 8-digit Singaporean phone number that starts with one of `3/6/8/9`. <br/> • While it is possible to key in any other inputs such as 90909090 (HP) or +60-12-345 6789, application would issue warnings. This helps to signal a deviation from the encouraged input format (e.g. 90909090 or 9090 9090), allowing users to manually check if the phone number they keyed in is correct. <br/> • While users can key in phone numbers with hyphens and space, these hyphens and space would be removed when phone number is stored in CCAmper.                                                                                                                                                                                                              |
-| Email                 | • Max 50 characters long.<br/>• Local-part contains only alphanumeric characters and the following `+_.-`. The local parts may not start or end with any special characters. <br/> • Domain labels are separated by period, consist of only alphanumeric characters and hyphens, <br/>and the end part (after the period) must be at least 2 characters long. <br/>(example.email@do-main.ca) |
+| Phone                 | • Encouraged input format: 8-digit Singaporean phone number that starts with one of `3/6/8/9`. <br/> • While it is possible to key in any other inputs such as 90909090 (HP) or +60-12-345 6789, application would issue warnings. This helps to signal a deviation from the encouraged input format (e.g. 90909090 or 9090 9090), allowing users to manually check if the phone number they keyed in is correct. <br/> • While users can key in phone numbers with hyphens and space, these hyphens and space would be removed when phone number is stored in CCAmper. Phone number cannot be empty after removing spaces and hyphens.                                                                                                                                                                                                             |
+| Email                 | • Max 50 characters long.<br/> • Email address should have 1 @ character. <br/> • Local-part contains only alphanumeric characters and the following special characters `+_.-`. These special characters are to be separated by at least one alphanumeric characters. The local parts may not start or end with any special characters. <br/> • At least 2 domain labels, with domain labels being separated by period. Each domain label a) starts and ends with alphanumeric character b) consists of only alphanumeric characters and hyphens, <br/>and the end part (after the period) must be at least 2 characters long. <br/>(example.email@do-main.ca) |
 | Address               | • Max 70 characters long.<br/>• Any characters, but cannot be blank.                                                                                                                                                                                                                                 |
 | Year                  | • Positive integer, or blank to not add one.                                                                                                                                                                                                                                                         |
 | Roles                 | • Maximum 20 characters for each role, maximum of 3 roles.<br/>• Contains only alphanumeric characters or spaces.                                                                                                                                                                                    |
@@ -100,7 +100,7 @@ about the corresponding item in `DetailedPanel`.
 | Pin                   | • Input either `TRUE` or `FALSE` (Non case-sensitive)                                                                                                                                                                                                                                                |
 
 **Duplicate handling**
-* We require that no two person have the exact same `Name` and `Phone` combination.
+* We require that no two persons have the exact same `Name` and `Phone` combination.
 
 </box>
 
@@ -150,9 +150,10 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/ROLE]…​ [t/TAG]… [
 Additional information on fields:
 * While one may key in phone numbers with hyphen(s) and/or space(s) to improve human-readability, the hyphen(s) and space(s) are automatically removed when phone number is stored in app.
 * The emergency contact fields (`ecn` and `ecp`) must be either all provided or not at all.
+* The enrollment year should be a positive integer. Note that this could be a year in the future. (I.e. those that are not currently enrolled but have accepted an application for enrollment in a future year)
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/President r/Camp leader ecn/Jack Doe ecp/99998888 ece/jackd@example.com enroll/2022 t/friend`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/President r/Camp leader ecn/Jack Doe ecp/99998888 enroll/2022 t/friend`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/98765432 t/criminal enroll/2024`
 
 Note: 
@@ -165,7 +166,7 @@ Note:
 
 <br>
 
-### Listing all persons : `list`
+### Listing all persons and events : `list`
 
 Resets any `find`, `event:student` or `student:event` filters used, and displays all persons and events in the address book.
 
@@ -189,9 +190,10 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/ROLE]…​ [t/T
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 * Editing roles follows the same rules as editing tags.
-* The pin field takes in either "TRUE" or "FALSE"
+* The pin field takes in either "TRUE" or "FALSE".
 * If the student has no emergency contact, then both emergency contact fields (`ecn` and `ecp`) must be either both provided or not at all.
-* The enrollment year should be a positive integer or empty string (to delete)
+* The emergency contact may be deleted by typing `ecn/ ecp/` without specifying the emergency contact's name or phone.
+* The enrollment year should be a positive integer or empty string (to delete).
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -274,6 +276,13 @@ Format: `add:event n/NAME d/(d/M/yyyy or d/M/yyyy-d/M/yyyy) [info/DESCRIPTION]`
 
 Examples:
 * `add:event n/meeting d/1/10/2025 info/routine meeting`
+* `add:event n/competition d/1/10/2025-5/10/2025 info/important competition`
+
+<box type="tip">
+
+**Note:**
+`d/M/yyyy` means that the date must have four digits for the year and have 1 or 2 digits for the day or month. E.g. `1/5/20205`, `15/3/2012`, `1/10/2025` and `12/2/2019`.
+</box>
 
 <box type="definition">
 
@@ -406,6 +415,25 @@ AddressBook data are saved automatically as a JSON file `[JAR file location]/dat
 If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Planned updates
+
+### Better validation of enrollment year
+
+
+### Better warning messages of events/contacts of similar names
+
+
+### Simplify the display of consolidate function
+Currently, there are two separate areas that users can view the consolidated information.
+In the future, we can just simplify the UI to only show consolidated information in one area.
+
+### Specify whether error message lies in phone number or emergency phone number
+Currently, if either phone number and/or emergency phone number is empty after removing spaces and hyphens, 
+the user will receive an error message that states "Phone number cannot be empty after removing spaces and hyphens."
+This is currently not a major priority, since users can easily locate the source(s) of errors by checking up to 2 fields only.
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -96,7 +96,9 @@ public class ParserUtil {
 
         String trimmedPhone = phone.trim();
         String rawNumber = Phone.convertRawFormat(trimmedPhone);
-
+        if (!Phone.isValidPhone(trimmedPhone)) {
+            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+        }
         if (Phone.hasWarning(rawNumber)) {
             MessageCenter.appendEnd(Phone.createWarningMessage(rawNumber));
         }
@@ -286,8 +288,11 @@ public class ParserUtil {
     public static Duration parseDuration(String duration) throws ParseException {
         requireNonNull(duration);
         String trimmedDuration = duration.trim();
-        if (!Duration.isValidDuration(trimmedDuration)) {
+        if (!Duration.isValidDates(trimmedDuration)) {
             throw new ParseException(Duration.MESSAGE_CONSTRAINTS);
+        }
+        if (!Duration.isValidDuration(trimmedDuration)) {
+            throw new ParseException(Duration.MESSAGE_CONSTRAINTS_RANGE);
         }
         return new Duration(trimmedDuration);
     }

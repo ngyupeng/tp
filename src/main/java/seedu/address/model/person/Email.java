@@ -24,12 +24,14 @@ public class Email {
     public static final String ERROR_MESSAGE_LOCAL = "The local-part should only contain alphanumeric characters, "
             + "and these special characters, excluding the parentheses, ("
             + SPECIAL_CHARACTERS
-            + "). The local-part may not start or end with any special characters.\n";
+            + "). Special characters to be separated by at least one alphanumeric characters. \n"
+            + "The local-part may not start or end with any special characters.\n";
     public static final String ERROR_MESSAGE_DOMAIN = "The domain name is "
             + "made up of domain labels separated by periods. The domain name must:\n"
             + "    - end with a domain label at least 2 characters long\n"
-            + "    - have each domain label start and end with alphanumeric characters\n"
-            + "    - have each domain label consist of alphanumeric characters and hyphens. \n";
+            + "    - have each domain label starts and ends with alphanumeric characters\n"
+            + "    - have each domain label consists of alphanumeric characters and hyphens\n"
+            + "    - contain at least 2 domain labels.\n";
 
     public static final String MESSAGE_CONSTRAINTS = ERROR_MESSAGE_INTRO
             + "1. " + ERROR_MESSAGE_LENGTH
@@ -44,7 +46,7 @@ public class Email {
     private static final String DOMAIN_PART_REGEX = ALPHANUMERIC_NO_UNDERSCORE
             + "(-" + ALPHANUMERIC_NO_UNDERSCORE + ")*";
     private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
-    private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
+    private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)+" + DOMAIN_LAST_PART_REGEX;
     public static final String VALIDATION_REGEX = LOCAL_PART_REGEX + "@" + DOMAIN_REGEX;
 
     public final String value;

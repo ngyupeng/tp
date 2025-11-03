@@ -13,7 +13,8 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is a brownfield project based on the [AddressBook-Level3](https://se-education.org/addressbook-level3/)
+project created by the [SE-EDU](https://se-education.org/).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -128,7 +129,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="800" />
 
 
 The `Model` component,
@@ -384,6 +385,7 @@ Use case ends.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: Personal contact details that should be hidden, including phone numbers, year of study.
 * **AddressBook**: Our product that allows CCA teachers to handle students’ contacts
+* **Brownfield project**: Our product that is developed and deployed upon an existing product.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Planned Enhancements**
@@ -396,6 +398,15 @@ Team Size: 5
 
 3. Order of members in the event's attendance list is based on their add date. We plan to add the ability to sort and
 filter the attendance list.
+
+### Simplify the display of consolidate function
+Currently, there are two separate areas that users can view the consolidated information.
+In the future, we can just simplify the UI to only show consolidated information in one area.
+
+### Specify whether error message lies in phone number or emergency phone number
+Currently, if either phone number and/or emergency phone number is empty after removing spaces and hyphens, 
+the user will receive an error message that states "Phone number cannot be empty after removing spaces and hyphens."
+This is currently not a major priority, since users can easily locate the source(s) of errors by checking up to 2 fields only.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -425,7 +436,22 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Adding a person
+
+1. Adding a new person
+
+   1. Test case: `add n/Bob Lim e/boblim@gmail.com a/Lim Chu Kang p/98761234`<br>
+      Expected: Person with name `Bob Lim` is added to the end of the list. Details of the person shown in the status message.
+
+1. Adding a person with a name already in the contact list
+
+   1. Prerequisites: Performed the previous step `Adding a new person`.
+
+   1. Test case: `add n/Bob Lim e/boblim2@gmail.com a/Lim Chu Kang p/98761234`<br>
+      Expected: No person is added. Error details shown in the status message.
+
+   1. Test case: `add n/Bob Lim e/boblim2@gmail.com a/Lim Chu Kang p/98761235`<br>
+      Expected: Person with name `Bob Lim` is added to the end of the list. Details of the person shown in the status message.
 
 ### Deleting a person
 
@@ -447,3 +473,58 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `delete 1`<br>
       Expected: First contact of the filtered list is deleted. Details of the deleted contact shown in the status message.
+
+### Adding an event
+
+1. Adding a new event
+
+    1. Test case: `add:event n/Sleepover d/10/10/2025-11/10/2025 info/Sleeping in school`<br>
+       Expected: Event with name `Sleepover` is added to the end of the list. Details of the event shown in the error message.
+
+1. Adding a event with a name already in the event list
+
+    1. Prerequisites: Performed the previous step `Adding a new event`.
+
+    1. Test case: `add:event n/Sleepover d/10/10/2025-11/10/2025 info/Sleeping in school in a classroom`<br>
+       Expected: No event is added. Error details shown in the status message.
+
+    1. Test case: `add:event n/Sleepover d/11/10/2025-12/10/2025 info/Sleeping in school`<br>
+       Expected: Event with name `Sleepover` is added to the end of the list. Details of the event shown in the error message.
+
+
+### Persistence of data
+
+1. Saving and loading data
+
+    1. Prerequisites: Performed all steps in the sections `Adding a person`, `Adding an event`.
+
+    1. Close the app window. Re-launch the app.
+       Expected: The contact and event lists remain the same as before.
+
+### Attending and unattending events
+
+1. Adding student to attendance list of event
+
+   1. Prerequisites: List all persons using the `list` command. At least 3 people and 1 event in the list.
+
+   1. Test case: `attend:event p/1 2 e/1`<br>
+      Expected: First and second persons in the contact list are added to the first event, if not already added. 
+
+   1. Test case: `attend:event p/1 e/1`<br>
+      Expected: First person in the contact list is not added to the first event. Details shown in the status message.
+
+   1. Test case: `event:student 1`<br>
+      Expected: First and second persons are in the attendance list of the first event.
+   
+1. Removing students from attendance list of event
+
+   1. Prerequisites: completed all steps in `Adding student to attendance list of event`. List all persons using the `list` command.
+
+   1. Test case: `unattend:event p/1 e/1`<br>
+      Expected: First person in the attendance list is removed from the first event. Details shown in the status message.
+
+   1. Test case: `unattend:event p/1 e/1`<br>
+      Expected: First person in the new attendance list is removed from the first event. Details shown in the status message.
+
+   1. Test case: `event:student 1`<br>
+      Expected: List of persons and attendance list have the same persons. The first two people originally in the attendance list of the first event are no longer there.

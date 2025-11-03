@@ -24,7 +24,7 @@ public class HelpWindow extends UiPart<Stage> {
             + "edit - Edits a person's details\n"
             + "find - Finds persons by field(s)\n"
             + "delete - Deletes a person\n"
-            + "consolidate - Consolidates a person's info\n"
+            + "consolidate - Consolidates all persons' info\n"
             + "clear - Clears all contacts\n"
             + "add:event - Adds an event\n"
             + "edit:event - Edits an event's details\n"

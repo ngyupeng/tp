@@ -396,6 +396,15 @@ Below are some enhancements that could be considered to be added.
 ### Better warning messages of events/contacts of similar names
 
 
+### Simplify the display of consolidate function
+Currently, there are two separate areas that users can view the consolidated information.
+In the future, we can just simplify the UI to only show consolidated information in one area.
+
+### Specify whether error message lies in phone number or emergency phone number
+Currently, if either phone number and/or emergency phone number is empty after removing spaces and hyphens, 
+the user will receive an error message that states "Phone number cannot be empty after removing spaces and hyphens."
+This is currently not a major priority, since users can easily locate the source(s) of errors by checking up to 2 fields only.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**

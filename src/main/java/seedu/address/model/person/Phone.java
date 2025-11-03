@@ -19,7 +19,7 @@ public class Phone {
     public static final String WARNING_MESSAGE_NON_NUMERIC = "This phone number contains non-numeric characters. \n";
     public static final String WARNING_MESSAGE_IMPROPER_BRACKETS = "There is an improper use of brackets. \n";
 
-    public static final String MESSAGE_CONSTRAINTS = "No hard constraints on phone number.";
+    public static final String MESSAGE_CONSTRAINTS = "Phone number cannot be empty after removing spaces and hyphens.";
 
     public final String value;
 
@@ -31,7 +31,7 @@ public class Phone {
     public Phone(String phone) {
         requireNonNull(phone);
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-        value = phone;
+        value = convertRawFormat(phone);
     }
 
     /**

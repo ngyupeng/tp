@@ -29,7 +29,7 @@ public class HelpWindow extends UiPart<Stage> {
             + "add:event - Adds an event\n"
             + "edit:event - Edits an event's details\n"
             + "attend:event - Adds person(s) to event attendance list\n"
-            + "unattend:event - Removes person(s) to event attendance list\n"
+            + "unattend:event - Removes person(s) from event attendance list\n"
             + "delete:event - Deletes an event\n"
             + "student:event - Lists events attended by student\n"
             + "event:student - Lists students attending an event\n"

@@ -45,7 +45,7 @@ public class AttendCommandParser {
             }
             if (!prefixes.isEmpty()) {
                 throw new ParseException(
-                        String.format(AddCommandParser.MESSAGE_MISSING_COMPULSORY_PREFIX,
+                        String.format(AddCommandParser.ERROR_MESSAGE_MISSING_COMPULSORY_PREFIX,
                                 String.join(", ", prefixes)));
             }
 

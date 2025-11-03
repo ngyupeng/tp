@@ -491,13 +491,14 @@ Use case ends.
 
 ## **Appendix: Planned Enhancements**
 
-Below are some enhancements that could be considered to be added.
+Team Size: 5
 
-### Better validation of enrollment year
+1. Better validation of enrollment year
 
+2. Better warning messages of events/contacts of similar names
 
-### Better warning messages of events/contacts of similar names
-
+3. Order of members in the event's attendance list is based on their add date. We plan to add the ability to sort and
+filter the attendance list.
 
 ### Simplify the display of consolidate function
 Currently, there are two separate areas that users can view the consolidated information.

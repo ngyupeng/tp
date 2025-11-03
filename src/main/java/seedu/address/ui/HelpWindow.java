@@ -16,7 +16,24 @@ import seedu.address.commons.core.LogsCenter;
 public class HelpWindow extends UiPart<Stage> {
 
     public static final String USERGUIDE_URL = "https://ay2526s1-cs2103t-t10-4.github.io/tp/UserGuide.html";
-    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
+    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL + "\n\n"
+            + "Summary of features:\n"
+            + "help - Opens help window\n"
+            + "add - Adds a person\n"
+            + "list - Lists all persons and events\n"
+            + "edit - Edits a person's details\n"
+            + "find - Finds persons by field(s)\n"
+            + "delete - Deletes a person\n"
+            + "consolidate - Consolidates a person's info\n"
+            + "clear - Clears all contacts\n"
+            + "add:event - Adds an event\n"
+            + "edit:event - Edits an event's details\n"
+            + "attend:event - Adds person(s) to event attendance list\n"
+            + "unattend:event - Removes person(s) to event attendance list\n"
+            + "delete:event - Deletes an event\n"
+            + "student:event - Lists events attended by student\n"
+            + "event:student - Lists students attending an event\n"
+            + "clear:event - Clears all events\n";
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";

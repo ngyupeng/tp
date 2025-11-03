@@ -100,7 +100,7 @@ about the corresponding item in `DetailedPanel`.
 | Pin                   | • Input either `TRUE` or `FALSE` (Non case-sensitive)                                                                                                                                                                                                                                                |
 
 **Duplicate handling**
-* We require that no two person have the exact same `Name` and `Phone` combination.
+* We require that no two persons have the exact same `Name` and `Phone` combination.
 
 </box>
 
@@ -165,7 +165,7 @@ Note:
 
 <br>
 
-### Listing all persons : `list`
+### Listing all persons and events : `list`
 
 Resets any `find`, `event:student` or `student:event` filters used, and displays all persons and events in the address book.
 

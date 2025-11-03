@@ -20,7 +20,7 @@ public class Duration {
             + "d/M/yyyy or d/M/yyyy-d/M/yyyy. E.g. \"1/10/2025\" or \"9/1/2022-10/2/2022\"."
             + "Where each date is a valid date.";
     public static final String MESSAGE_CONSTRAINTS_RANGE = "Event duration of the format d/M/yyyy-d/M/yyyy, "
-            + "should not have the first date after the second date.";
+            + "should not have the start date after the end date.";
 
     /*
      * The string must be a positive integer.

@@ -44,7 +44,6 @@ public class EventPanel extends UiPart<VBox> {
 
         duration.setGraphic(yearIcon);
         description.setGraphic(infoIcon);
-
     }
 
     /**

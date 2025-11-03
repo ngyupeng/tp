@@ -59,7 +59,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            editPersonDescriptor.setName(ParserUtil.parseNameWithWarning(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
@@ -68,7 +68,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
+            editPersonDescriptor.setAddress(ParserUtil.parseAddressWithWarning(
+                    argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
         if (argMultimap.getValue(PREFIX_PIN).isPresent()) {
             editPersonDescriptor.setPin(ParserUtil.parsePin(argMultimap.getValue(PREFIX_PIN).get()));
@@ -76,7 +77,11 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         final boolean hasEmergencyName = argMultimap.getValue(PREFIX_EMERGENCY_NAME).isPresent();
         final boolean hasEmergencyPhone = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).isPresent();
-        if (hasEmergencyName || hasEmergencyPhone) {
+
+        if (hasEmergencyName && hasEmergencyPhone && argMultimap.getValue(PREFIX_EMERGENCY_NAME).get().isBlank()
+                && argMultimap.getValue(PREFIX_EMERGENCY_PHONE).get().isBlank()) {
+            editPersonDescriptor.setEmergencyContact(new EmergencyContact());
+        } else if (hasEmergencyName || hasEmergencyPhone) {
             Name newEmergencyName = null;
             if (hasEmergencyName) {
                 newEmergencyName = ParserUtil.parseName(argMultimap.getValue(PREFIX_EMERGENCY_NAME).get());

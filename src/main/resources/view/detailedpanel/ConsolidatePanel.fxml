@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <ScrollPane hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS"
+                style="-fx-padding: 15 15 15 15;">
+        <GridPane VBox.vgrow="ALWAYS">
+            <VBox GridPane.columnIndex="0" GridPane.vgrow="ALWAYS" GridPane.fillHeight="true" GridPane.fillWidth="true"
+                  GridPane.hgrow="SOMETIMES" alignment="CENTER" minHeight="-Infinity">
+                <TextArea fx:id="name" editable="false" styleClass="result-display" wrapText="true" VBox.vgrow="ALWAYS" />
+            </VBox>
+        </GridPane>
+
+    </ScrollPane>
+</VBox>

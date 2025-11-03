@@ -58,9 +58,17 @@ public class EmergencyContact {
 
     /**
      * Returns a new emergency contact, which is the result of applying the edits to this emergency contact.
-     * Null fields in {@code edits} are treated as no change to the field.
+     * Null fields in {@code edits} are treated as no change to the field, but if all fields are null, then this is
+     * treated as deleting the emergency contact. If {@code edits} is null, this does not modify anything.
      */
     public EmergencyContact merge(EmergencyContact edits) {
+        if (edits == null) {
+            return new EmergencyContact(this);
+        }
+        if (edits.isEmpty()) {
+            return new EmergencyContact();
+        }
+
         String editedName = null;
         if (edits.name != null) {
             editedName = edits.name.fullName;

@@ -160,14 +160,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void setPerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);
-        persons.setPerson(target, editedPerson);
-        sort();
         events.forEach(e -> {
             if (e.getAttendance().contains(new PersonReference(target))) {
                 e.getAttendance().remove(new PersonReference(target));
                 e.getAttendance().add(new PersonReference(editedPerson));
             }
         });
+        persons.setPerson(target, editedPerson);
+        sort();
     }
 
     /**
@@ -193,11 +193,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Clears the event list.
+     * Clears the person list and attendance list of events.
      */
     public void clearPerson() {
         persons.clear();
-        events.forEach(e -> e.getAttendance().clear());
+        events.setEvents(events.asUnmodifiableObservableList()
+                .stream().peek(e -> e.getAttendance().clear()).toList());
     }
 
     //// sort methods

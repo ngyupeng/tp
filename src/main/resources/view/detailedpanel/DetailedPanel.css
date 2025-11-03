@@ -2,3 +2,9 @@
     -fx-text-fill: white;
     -fx-font-size: 20;
 }
+
+.result-display .content {
+    -fx-background-color: derive(#272815, 10%);
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+}

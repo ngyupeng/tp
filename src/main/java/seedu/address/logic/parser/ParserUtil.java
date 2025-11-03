@@ -58,6 +58,21 @@ public class ParserUtil {
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
+     * Checks for style guide and appends a warning to the user.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static Name parseNameWithWarning(String name) throws ParseException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        Name result = parseName(trimmedName);
+        MessageCenter.appendEnd(Name.getStyleWarningMessage(trimmedName));
+        return result;
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code name} is invalid.
      */
@@ -66,8 +81,6 @@ public class ParserUtil {
         String trimmedName = name.trim();
         if (!Name.isValidName(trimmedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
-        } else {
-            MessageCenter.appendEnd(String.format(Name.getStyleWarningMessage(name), name));
         }
         return new Name(trimmedName);
     }
@@ -82,16 +95,29 @@ public class ParserUtil {
         requireNonNull(phone);
 
         String trimmedPhone = phone.trim();
-        String processNumber = Phone.convertRawFormat(trimmedPhone);
-
-        if (!Phone.isValidPhone(processNumber)) {
-            throw new ParseException(Phone.createErrorMessage(processNumber));
+        String rawNumber = Phone.convertRawFormat(trimmedPhone);
+        if (!Phone.isValidPhone(trimmedPhone)) {
+            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
         }
-        if (Phone.hasWarning(processNumber)) {
-            MessageCenter.appendEnd(Phone.createWarningMessage(processNumber));
+        if (Phone.hasWarning(rawNumber)) {
+            MessageCenter.appendEnd(Phone.createWarningMessage(rawNumber));
         }
 
         return new Phone(trimmedPhone);
+    }
+
+    /**
+     * Parses a {@code String address} into an {@code Address}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code address} is invalid.
+     */
+    public static Address parseAddressWithWarning(String address) throws ParseException {
+        requireNonNull(address);
+        String trimmedAddress = address.trim();
+        Address result = parseAddress(trimmedAddress);
+        MessageCenter.appendEnd(Address.getStyleWarningMessage(trimmedAddress));
+        return result;
     }
 
     /**
@@ -169,6 +195,7 @@ public class ParserUtil {
         if (!Role.isValidRoleName(trimmedRole)) {
             throw new ParseException(Role.MESSAGE_CONSTRAINTS);
         }
+        MessageCenter.appendEnd(Role.getStyleWarningMessage(trimmedRole));
         return new Role(trimmedRole);
     }
 
@@ -242,12 +269,13 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code name} is invalid.
      */
-    public static EventName parseEventName(String name) throws ParseException {
+    public static EventName parseEventNameWithWarning(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!EventName.isValidName(trimmedName)) {
             throw new ParseException(EventName.MESSAGE_CONSTRAINTS);
         }
+        MessageCenter.appendEnd(EventName.getStyleWarningMessage(trimmedName));
         return new EventName(trimmedName);
     }
 

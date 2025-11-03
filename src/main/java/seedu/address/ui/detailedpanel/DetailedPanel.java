@@ -26,6 +26,7 @@ public class DetailedPanel extends UiPart<StackPane> {
     private final ObservableObjectValue<Person> selectedPerson;
     private final EventPanel eventPanel;
     private final ObservableObjectValue<Event> selectedEvent;
+    private final ConsolidatePanel consolidatePanel;
 
     @FXML
     private VBox helpPanelPlaceholder;
@@ -33,6 +34,8 @@ public class DetailedPanel extends UiPart<StackPane> {
     private VBox personPanelPlaceholder;
     @FXML
     private VBox eventPanelPlaceholder;
+    @FXML
+    private VBox consolidatePanelPlaceholder;
 
     private VBox activePanel = helpPanelPlaceholder;
 
@@ -46,10 +49,12 @@ public class DetailedPanel extends UiPart<StackPane> {
         this.selectedEvent = selectedEvent;
         personPanel = new PersonPanel();
         eventPanel = new EventPanel();
+        consolidatePanel = new ConsolidatePanel();
 
         helpPanelPlaceholder.getChildren().add(helpPanel.getRoot());
         personPanelPlaceholder.getChildren().add(personPanel.getRoot());
         eventPanelPlaceholder.getChildren().add(eventPanel.getRoot());
+        consolidatePanelPlaceholder.getChildren().add(consolidatePanel.getRoot());
 
         // Workaround to get panel height to fill up the whole container
         helpPanel.getRoot().prefHeightProperty().bind(personPanelPlaceholder.heightProperty());
@@ -58,6 +63,8 @@ public class DetailedPanel extends UiPart<StackPane> {
         personPanelPlaceholder.setVisible(false);
         eventPanel.getRoot().prefHeightProperty().bind(eventPanelPlaceholder.heightProperty());
         eventPanelPlaceholder.setVisible(false);
+        consolidatePanel.getRoot().prefHeightProperty().bind(consolidatePanelPlaceholder.heightProperty());
+        consolidatePanelPlaceholder.setVisible(false);
 
         selectedPerson.addListener((obs, old, newPerson) -> {
             if (newPerson == null) {
@@ -122,5 +129,18 @@ public class DetailedPanel extends UiPart<StackPane> {
         activePanel.setVisible(false);
         eventPanelPlaceholder.setVisible(true);
         activePanel = eventPanelPlaceholder;
+    }
+
+    /**
+     * Shows the consolidated information of all the persons
+     */
+    public void showConsolidatedInfo(String info) {
+        consolidatePanel.update(info);
+        if (activePanel == consolidatePanelPlaceholder) {
+            return;
+        }
+        activePanel.setVisible(false);
+        consolidatePanelPlaceholder.setVisible(true);
+        activePanel = consolidatePanelPlaceholder;
     }
 }

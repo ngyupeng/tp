@@ -4,20 +4,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       style="-fx-border-color: black;-fx-padding: 10">
 
-    <HBox spacing="0.5" alignment="CENTER_LEFT">
+    <HBox spacing="5" maxWidth="Infinity" alignment="CENTER_LEFT">
         <Label fx:id="id">
             <minWidth>
                 <!-- Ensures that the label text is never truncated -->
                 <Region fx:constant="USE_PREF_SIZE"/>
             </minWidth>
         </Label>
-        <Label fx:id="name" text="\$first"/>
+        <VBox>
+            <Label fx:id="name" text="\$first" wrapText="true"/>
+            <Label fx:id="phone"/>
+        </VBox>
     </HBox>
-    <Label fx:id="phone" />
 
 </VBox>

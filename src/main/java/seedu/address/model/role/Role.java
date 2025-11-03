@@ -2,6 +2,10 @@ package seedu.address.model.role;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_CONSECUTIVE_SPACES;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_INCORRECT_CAPITALIZATION;
+import static seedu.address.commons.util.StyleUtil.hasConsecutiveSpaces;
+import static seedu.address.commons.util.StyleUtil.isCapitalizedWithLetters;
 
 /**
  * Represents a Role for a contact in the address book.
@@ -43,6 +47,24 @@ public class Role {
      */
     public static boolean isValidFindString(String test) {
         return test.isEmpty() || isValidRoleName(test);
+    }
+
+    /**
+     * Returns a message containing details about not following the recommend style format.
+     * Does not throw an error.
+     */
+    public static String getStyleWarningMessage(String test) {
+        StringBuilder styleWarning = new StringBuilder();
+
+        if (hasConsecutiveSpaces(test)) {
+            styleWarning.append(
+                    String.format(MESSAGE_CONSECUTIVE_SPACES, Role.class.getSimpleName(), test));
+        }
+        if (!isCapitalizedWithLetters(test)) {
+            styleWarning.append(
+                    String.format(MESSAGE_INCORRECT_CAPITALIZATION, Role.class.getSimpleName(), test));
+        }
+        return styleWarning.toString();
     }
 
     @Override

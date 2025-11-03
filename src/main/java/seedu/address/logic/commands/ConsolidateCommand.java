@@ -25,7 +25,7 @@ public class ConsolidateCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Consolidate all distinct students' data: \n";
 
-    private static final Logger logger = Logger.getLogger(ConsolidateCommand.class.getName());
+    private static Logger logger = Logger.getLogger(ConsolidateCommand.class.getName());
 
     /**
      * Lists the categories whose data will be consolidated under ConsolidateCommand.

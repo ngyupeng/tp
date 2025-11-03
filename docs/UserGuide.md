@@ -11,50 +11,44 @@
 
 --------------------------------------------------------------------------------------------------------------------
 ## Welcome to CCAmper!
-CCAmper is the perfect app for **secondary school teachers** as an all-in-one desktop app for
+CCAmper is the perfect app for **Singaporean secondary school teachers** as an all-in-one desktop app for
 - Managing all your various CCA student details plus emergency contact details
 - Keeping track of their attendance with respect to various events
 
-CCAmper is optimized for use via a
-<tooltip content="Command Line Interface">**CLI**</tooltip> to help secondary school teachers to
-**plan, manage, and simplify** your CCA's weekly tasks faster than traditional
-<tooltip content="Graphical User Interface">GUI</tooltip> apps.
+CCAmper is optimized for use via a **Command Line Interface (CLI)** to help secondary school teachers to
+**plan, manage, and simplify** your CCA's weekly tasks faster than traditional **Graphical User Interface (GUI)** apps.
 
+<box type="info" seamless>
+
+**Advanced keyboard technique:** Use `tab` to switch between the input box, person list, and event list!<br>
+While focused on the person list or event list, use `up` and `down` to navigate quickly.
+</box>
 
 ## Quick start
 
 1. Download and install Java `17` or above from this
    <a href="https://www.oracle.com/java/technologies/downloads/#java17">Java downloads page</a>.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed
-   [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).<br> {{ verifyJava17 }}
+   [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).<br> {{ verifyJava17Box }}
 
 2. Download our latest CCAmper `.jar` file from our [GitHub page](https://github.com/AY2526S1-CS2103T-T10-4/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
    <br>We recommend placing the `.jar` file into a folder named `CCAmper` on your desktop for easy access.
 
-3. Open a command terminal, {{ navigate }} into the folder containing the `.jar` file,
-   and use the `java -jar addressbook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
-
-<br>
-   <img src="images/Ui.png" width="600" height="450"/>
+4. Open a command terminal, navigate into the folder containing the `.jar` file,
+   and use the `java -jar addressbook.jar` command to run the application.
+<br>{{ navigateGuideBox }}
+5. A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
+The layout of the application is also shown below. Clicking on a person or event will show more detailed information
+about the corresponding item in `DetailedPanel`.
 <br><br>
+    <img src="images/Ui.png" width="560" height="400"/>
+<br>
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+6. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
 
-   * `list` : Lists all contacts.
-
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
-
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
-
-   * `clear` : Deletes all contacts.
-
-   * `exit` : Exits the app.
-
-2. Refer to the [Features](#features) below for details of each command.
+7. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -66,21 +60,25 @@ CCAmper is optimized for use via a
 
 **Notes about the syntax and command format:**<br>
 
+* Prefixes start with letters followed by a slash, e.g. `n/`.<br>
+  Certain prefixes are reserved for each command, meaning that it is not possible to
+  supply a string starting with the reserved prefix to another prefix. Workaround is to use other characters.
+  * e.g. `a/FRONT n/MIDDLE BACK` is parsed as two separate prefixes.<br><br>
+    
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in **square brackets** are optional.<br>
   * e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-  * e.g `n/NAME [enroll/[YEAR]]` can be used as `n/John enroll/` or as `n/John enroll/2024` or as `n/John`.
+  * e.g `n/NAME [enroll/[YEAR]]` can be used as `n/John enroll/` or as `n/John enroll/2024` or as `n/John`.<br><br>
 
 * Items with `…` after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…` can be empty, `t/friend`, `t/friend family` etc.
+  e.g. `[t/TAG]…` can be empty, `t/friend`, `t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+* For commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`), there should not be any characters (except whitespace) that comes before and/or follow the command keyword. This is to avoid scenarios such as `help list exit`, where command keyed in may be unclear.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
@@ -91,9 +89,9 @@ CCAmper is optimized for use via a
 
 | Field                 | Requirements                                                                                                                                                                                                                                                                                         |
 |-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Name                  | • Max 50 characters long.<br/>• Letters, numbers, and spaces and the following `.,-'()` only.<br>• Cannot be blank                                                                                                                                                                                   |
-| Phone                 | • Standard Format: Exactly 8 digits that starts with one of `3/6/8/9`.                                                                                                                                                                                                                                                |
-| Email                 | • Max 50 characters long.<br/>• Local-part contains only alphanumeric characters and the following `+_.-` <br/>• Domain label must consist of only alphanumeric characters and hyphens, <br/>and the end part (after the period) must be at least 2 characters long. <br/>(example.email@do-main.ca) |
+| Name                  | • Max 50 characters long.<br/>• Letters, numbers, and spaces and the following `.,-'()/` only.<br>• Cannot be blank                                                                                                                                                                                   |
+| Phone                 | • Encouraged input format: 8-digit Singaporean phone number that starts with one of `3/6/8/9`. <br/> • While it is possible to key in any other inputs such as 90909090 (HP) or +60-12-345 6789, application would issue warnings. This helps to signal a deviation from the encouraged input format (e.g. 90909090 or 9090 9090), allowing users to manually check if the phone number they keyed in is correct. <br/> • While users can key in phone numbers with hyphens and space, these hyphens and space would be removed when phone number is stored in CCAmper. Phone number cannot be empty after removing spaces and hyphens.                                                                                                                                                                                                             |
+| Email                 | • Max 50 characters long.<br/> • Email address should have 1 @ character. <br/> • Local-part contains only alphanumeric characters and the following special characters `+_.-`. These special characters are to be separated by at least one alphanumeric characters. The local parts may not start or end with any special characters. <br/> • At least 2 domain labels, with domain labels being separated by period. Each domain label a) starts and ends with alphanumeric character b) consists of only alphanumeric characters and hyphens, <br/>and the end part (after the period) must be at least 2 characters long. <br/>(example.email@do-main.ca) |
 | Address               | • Max 70 characters long.<br/>• Any characters, but cannot be blank.                                                                                                                                                                                                                                 |
 | Year                  | • Positive integer, or blank to not add one.                                                                                                                                                                                                                                                         |
 | Roles                 | • Maximum 20 characters for each role, maximum of 3 roles.<br/>• Contains only alphanumeric characters or spaces.                                                                                                                                                                                    |
@@ -102,7 +100,7 @@ CCAmper is optimized for use via a
 | Pin                   | • Input either `TRUE` or `FALSE` (Non case-sensitive)                                                                                                                                                                                                                                                |
 
 **Duplicate handling**
-* We require that no two person have the exact same `Name` and `Phone` combination.
+* We require that no two persons have the exact same `Name` and `Phone` combination.
 
 </box>
 
@@ -114,12 +112,12 @@ CCAmper is optimized for use via a
   These do not throw an error, but will display a warning message after the command finishes execution,<br>
   and during launch of the program.
 
-| Field                 | Style Guide                                                                                                              |
-|-----------------------|:-------------------------------------------------------------------------------------------------------------------------|
-| Name                  | • Proper capitalization<br/>• No consecutive spaces<br/>• Brackets close, e.g. `John (Doe` is not stylish                |
-| Address               | • Proper capitalization                                                                                                  |
-| Roles                 | • Proper capitalization<br/>• No consecutive spaces                                                                      |
-| Emergency<br/>Contact | • Name field has the same recommendations as specified above.<br/>• Name field should be different from student's name.  |
+| Field                 | Style Guide                                                                                                                                                                                                                     |
+|-----------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name                  | • Proper capitalization (First letter of each word is capitalized)<br/> e.g. `Al-Amaan`, `John's Dad` is proper, but `john`, `Bob(f)` is not.<br/>• No consecutive spaces<br/>• Brackets close, e.g. `John (Doe` is not stylish |
+| Address               | • Proper capitalization                                                                                                                                                                                                         |
+| Roles                 | • Proper capitalization<br/>• No consecutive spaces                                                                                                                                                                             |
+| Emergency<br/>Contact | • Name field has the same recommendations as specified above.<br/>• Name field should be different from student's name.                                                                                                         |
 
 </box>
 
@@ -147,7 +145,7 @@ A popup appears which redirects the user to this current page. :D
 
 Add students to your address book, with the given fields.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/ROLE]…​ [t/TAG]…​ [pin/TRUE] [enroll/YEAR] [ecn/EMERGENCY_NAME] [ecp/EMERGENCY_PHONE]`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/ROLE]…​ [t/TAG]… [pin/TRUE] [enroll/YEAR] [ecn/EMERGENCY_NAME] [ecp/EMERGENCY_PHONE]`
 
 Additional information on fields:
 * While one may key in phone numbers with hyphen(s) and/or space(s) to improve human-readability, the hyphen(s) and space(s) are automatically removed when phone number is stored in app.
@@ -155,7 +153,7 @@ Additional information on fields:
 * The enrollment year should be a positive integer. Note that this could be a year in the future. (I.e. those that are not currently enrolled but have accepted an application for enrollment in a future year)
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/President r/Camp leader ecn/Jack Doe ecp/99998888 ece/jackd@example.com enroll/2022 t/friend`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/President r/Camp leader ecn/Jack Doe ecp/99998888 enroll/2022 t/friend`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/98765432 t/criminal enroll/2024`
 
 Note: 
@@ -163,18 +161,18 @@ Note:
  
 <box type="tip">
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** Refer to the constraints specified above for each of the fields!
 </box>
 
 <br>
 
-### Listing all persons : `list`
+### Listing all persons and events : `list`
 
-Shows a list of all persons in the address book.
+Resets any `find`, `event:student` or `student:event` filters used, and displays all persons and events in the address book.
 
 Format: `list`
 
-It should look like this:
+This command brings you back to the default view:
 
 <img src="images/list.png" width="650" height="400"/>
 
@@ -194,6 +192,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/ROLE]…​ [t/T
 * Editing roles follows the same rules as editing tags.
 * The pin field takes in either "TRUE" or "FALSE"
 * If the student has no emergency contact, then both emergency contact fields (`ecn` and `ecp`) must be either both provided or not at all.
+* The emergency contact may be deleted by typing `ecn/ ecp/` without specifying the emergency contact's name or phone.
 * The enrollment year should be a positive integer or empty string (to delete).
 
 Examples:
@@ -244,6 +243,28 @@ Format: `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the displayed person list.
 * `find n/Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+<br>
+
+### Consolidate student info : `consolidate`
+
+Consolidate students' a) names, b) phone number, c) email and d) address and
+display data under corresponding categories.
+
+Format: `consolidate`
+
+* If there are repeated values for a particular category (e.g. two students share the same phone number),
+  then that particular value (e.g. phone number) is displayed once.
+* Within each category, the data is being sorted lexicographically in ascending order. This is to help teachers scan through the consolidated data more easily. 
+
+<br>
+
+### Clearing all contacts : `clear`
+
+<box type="warning">
+
+**Warning:** Deletes all contacts from the address book. Not undoable.
+</box>
 
 <br>
 
@@ -354,28 +375,6 @@ Examples:
 
 <br>
 
-### Consolidate student info : `consolidate`
-
-Consolidate students' a) names, b) phone number, c) email and d) address and
-display data under corresponding categories.
-
-Format: `consolidate`
-
-* If there are repeated values for a particular category (e.g. two students share the same phone number),
-  then that particular value (e.g. phone number) is displayed once.
-* Within each category, the data is being sorted lexicographically in ascending order. This is to help teachers scan through the consolidated data more easily. 
-
-<br>
-
-### Clearing all contacts : `clear`
-
-<box type="warning">
-
-**Warning:** Deletes all contacts from the address book. Not undoable.
-</box>
-
-<br>
-
 ### Clearing all events : `clear:event`
 
 <box type="warning">
@@ -400,7 +399,7 @@ CCAmper data are saved in the hard disk automatically after any command that cha
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/CCAmper.json`.
+AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`.
 <br>Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning">
@@ -414,8 +413,20 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 ## Planned updates
 
-1. We are planning to integrate an **event list**, which can be used to keep track of weekly session attendance of students.
+### Better validation of enrollment year
 
+
+### Better warning messages of events/contacts of similar names
+
+
+### Simplify the display of consolidate function
+Currently, there are two separate areas that users can view the consolidated information.
+In the future, we can just simplify the UI to only show consolidated information in one area.
+
+### Specify whether error message lies in phone number or emergency phone number
+Currently, if either phone number and/or emergency phone number is empty after removing spaces and hyphens, 
+the user will receive an error message that states "Phone number cannot be empty after removing spaces and hyphens."
+This is currently not a major priority, since users can easily locate the source(s) of errors by checking up to 2 fields only.
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -443,8 +454,10 @@ Action     | Format, Examples
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/ROLE]…​ [t/TAG]…​ [pin/TRUE] [enroll/YEAR] [ecn/EMERGENCY_NAME] [ecp/EMERGENCY_PHONE]` <br> e.g., `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/president r/camp leader ecn/Jack Doe ecp/99998888 enroll/2022 t/friend`
 **List** | `list`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/ROLE]…​ [t/TAG]…​ [pin/(TRUE/FALSE)] [enroll/[YEAR]] [ecn/EMERGENCY_NAME] [ecp/EMERGENCY_PHONE]`<br> e.g.,`edit 1 n/John p/98765432 e/johndoe@example.com a/New Place r/Senior Student t/experienced pin/TRUE enroll/2022 ecn/Sally ecp/88887777`
-**Find** | `find [n/KEYWORD [MORE_KEYWORDS]] [t/KEYWORD [MORE_KEYWORDS]] [enroll/[(<\|<=\|>\|>=\|=)NUMBER]] [r/SUBSTRING]…​`<br> e.g., `find n/yu john enroll/>=2022 r/lead r/sec`
+**Find** | `find [n/KEYWORD [MORE_KEYWORDS]] [t/KEYWORD [MORE_KEYWORDS]] [enroll/[(<\|<=\|>\|>=\|=)NUMBER]] [r/KEYWORD]…`<br> e.g., `find n/yu john enroll/>=2022 r/lead r/sec`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Consolidate** | `consolidate`
+**Clear**  | `clear`
 **Add Event** | `add:event n/NAME d/(d/M/yyyy or d/M/yyyy-d/M/yyyy) [info/DESCRIPTION]` <br> e.g., `add:event n/meeting d/1/10/2025 info/routine meeting`
 **Edit Event** | `edit:event [n/NAME] [d/(d/M/yyyy or d/M/yyyy-d/M/yyyy)] [info/DESCRIPTION]` <br> e.g., `edit:event 1 n/new meeting d/2/10/2025 info/special meeting`
 **Attend Event** | `attend:event e/EVENT_INDEX p/PERSON_INDEX [PERSON_INDEXES]...`<br> e.g. `attend:event e/1 p/3 5`
@@ -452,6 +465,4 @@ Action     | Format, Examples
 **Delete Event** | `delete:event INDEX`<br> e.g., `delete:event 3`
 **List Events Attended By Student** | `student:event INDEX_OF_STUDENT_LIST`<br> e.g., `student:event 1`
 **List Students Attending An Event** | `event:student INDEX_OF_EVENT_LIST`<br> e.g., `event:student 1`
-**Consolidate** | `consolidate`
-**Clear**  | `clear`
 **Clear Events**  | `clear:event`

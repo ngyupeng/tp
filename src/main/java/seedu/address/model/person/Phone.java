@@ -13,19 +13,13 @@ public class Phone {
 
     // Error message has greater severity than warning message.
 
-    public static final String ERROR_MESSAGE_FIST_CHARACTER = "Expected Singapore phone number "
-            + "that starts with 3/6/8/9. \n";
-    public static final String ERROR_MESSAGE_LOWER_LIMIT = "Expected 8 digit Singapore phone number \n";
-
-    public static final String WARNING_MESSAGE_UPPER_LIMIT = "Phone number keyed in is more than 8 characters long \n";
-    public static final String WARNING_MESSAGE_NON_NUMERIC = "This phone number contains non-numeric characters."
-            + "\n";
+    public static final String WARNING_MESSAGE_FIRST_CHARACTER = "Phone number does not starts with 3/6/8/9. \n";
+    public static final String WARNING_MESSAGE_LENGTH_LIMIT = "After removing spaces and hyphens, "
+            + "phone number is not 8 character long. \n";
+    public static final String WARNING_MESSAGE_NON_NUMERIC = "This phone number contains non-numeric characters. \n";
     public static final String WARNING_MESSAGE_IMPROPER_BRACKETS = "There is an improper use of brackets. \n";
 
-    public static final String MESSAGE_CONSTRAINTS = "1. "
-            + ERROR_MESSAGE_LOWER_LIMIT
-            + "2. "
-            + ERROR_MESSAGE_FIST_CHARACTER;
+    public static final String MESSAGE_CONSTRAINTS = "Phone number cannot be empty after removing spaces and hyphens.";
 
     public final String value;
 
@@ -37,7 +31,7 @@ public class Phone {
     public Phone(String phone) {
         requireNonNull(phone);
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-        value = phone;
+        value = convertRawFormat(phone);
     }
 
     /**
@@ -51,39 +45,27 @@ public class Phone {
     }
 
     /**
-     * Checks if the phone number given starts with 8 numerical digits.
-     * Takes into account edge cases such as '98769876 (HP)',
-     * where there may be non-numerical digits that follows.
+     * Checks if the phone number is 8 characters long.
      *
      * @param test Phone number to be tested.
-     * @return The conditional check of whether the phone number given starts with 8 numerical digits.
+     * @return The conditional check of whether the phone number is 8 characters long.
      */
-    public static boolean hasEightNumber(String test) {
+    public static boolean hasEightCharacters(String test) {
         // Remove space and hyphens from test string first
         test = convertRawFormat(test);
 
-        // Check for conditions that guarantee to return false
+        // Check for conditions
         if (test == null) {
             return false;
         }
-        if (test.length() < 8) {
-            return false;
-        }
-
-        // Check if the first 8 character contains only number
-        return containOnlyNumbers(test.substring(0, 8));
+        return test.length() == 8;
     }
 
-    private static boolean containOnlyNumbers(String test) {
+    private static boolean hasOnlyNumbers(String test) {
         return test.chars().allMatch(Character::isDigit);
     }
 
-    private static boolean lengthGreaterThanEight(String test) {
-        test = convertRawFormat(test);
-        return test.length() > 8;
-    }
-
-    private static boolean validFirstDigit(String test) {
+    private static boolean hasValidFirstDigit(String test) {
         test = convertRawFormat(test);
         if (test.length() == 0) {
             return false;
@@ -95,28 +77,6 @@ public class Phone {
     }
 
     /**
-     * Creates error message depending on the issue(s) of phone number provided.
-     *
-     * @param test Phone number provided.
-     * @return A description of the issue(s) of the phone number provided.
-     */
-    public static String createErrorMessage(String test) {
-        test = convertRawFormat(test);
-        String errorMessage = String.format("Phone number %s is invalid\n", test);
-        int counter = 1;
-
-        if (!hasEightNumber(test)) {
-            errorMessage += counter + ". " + ERROR_MESSAGE_LOWER_LIMIT;
-            counter += 1;
-        }
-        if (!validFirstDigit(test)) {
-            errorMessage += counter + ". " + ERROR_MESSAGE_FIST_CHARACTER;
-        }
-
-        return errorMessage;
-    }
-
-    /**
      * Returns true if phone number needs to have warning.
      *
      * @param test Phone number provided.
@@ -124,7 +84,13 @@ public class Phone {
      */
     public static boolean hasWarning(String test) {
         test = convertRawFormat(test);
-        if (!containOnlyNumbers(test) || lengthGreaterThanEight(test)) {
+        if (!hasOnlyNumbers(test)) {
+            return true;
+        }
+        if (!hasValidFirstDigit(test)) {
+            return true;
+        }
+        if (!hasEightCharacters(test)) {
             return true;
         }
         return false;
@@ -139,7 +105,7 @@ public class Phone {
                 || input.contains("}");
     }
 
-    private static boolean isValidUseOfBracket(String input) {
+    private static boolean hasValidUseOfBracket(String input) {
         if (!hasBracket(input)) {
             // Vacuously true
             return true;
@@ -201,16 +167,20 @@ public class Phone {
 
         int counter = 1;
 
-        if (lengthGreaterThanEight(test)) {
-            warningMessage += counter + ". " + WARNING_MESSAGE_UPPER_LIMIT;
+        if (!hasEightCharacters(test)) {
+            warningMessage += counter + ". " + WARNING_MESSAGE_LENGTH_LIMIT;
             counter += 1;
         }
-        if (!containOnlyNumbers(test)) {
+        if (!hasOnlyNumbers(test)) {
             warningMessage += counter + ". " + WARNING_MESSAGE_NON_NUMERIC;
             counter += 1;
         }
-        if (!isValidUseOfBracket(test)) {
+        if (!hasValidUseOfBracket(test)) {
             warningMessage += counter + ". " + WARNING_MESSAGE_IMPROPER_BRACKETS;
+            counter += 1;
+        }
+        if (!hasValidFirstDigit(test)) {
+            warningMessage += counter + ". " + WARNING_MESSAGE_FIRST_CHARACTER;
         }
 
         return warningMessage;
@@ -227,12 +197,9 @@ public class Phone {
         if (test.length() == 0) {
             return false;
         }
-        if (!hasEightNumber(test)) {
-            return false;
-        }
-        if (!validFirstDigit(test)) {
-            return false;
-        }
+        // As long as test is not 0 in length, test is a valid phone, since there is
+        // no hard constraints for phone.
+
         return true;
     }
 

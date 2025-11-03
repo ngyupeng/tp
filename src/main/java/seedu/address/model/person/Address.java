@@ -2,6 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_CONSECUTIVE_SPACES;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_INCORRECT_CAPITALIZATION;
+import static seedu.address.commons.util.StyleUtil.hasConsecutiveSpaces;
+import static seedu.address.commons.util.StyleUtil.isCapitalizedWithLetters;
 
 /**
  * Represents a Person's address in the address book.
@@ -36,6 +40,25 @@ public class Address {
      */
     public static boolean isValidAddress(String test) {
         return test.length() <= 70 && test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns a message containing details about not following the recommend style format.
+     * Does not throw an error.
+     */
+    public static String getStyleWarningMessage(String test) {
+        StringBuilder styleWarning = new StringBuilder();
+
+        if (hasConsecutiveSpaces(test)) {
+            styleWarning.append(
+                    String.format(MESSAGE_CONSECUTIVE_SPACES, Address.class.getSimpleName(), test));
+        }
+        if (!isCapitalizedWithLetters(test)) {
+            styleWarning.append(
+                    String.format(MESSAGE_INCORRECT_CAPITALIZATION, Address.class.getSimpleName(), test));
+        }
+
+        return styleWarning.toString();
     }
 
     @Override

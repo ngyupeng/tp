@@ -2,8 +2,12 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-
-import java.util.Arrays;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_BRACKET_NOT_CLOSED;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_CONSECUTIVE_SPACES;
+import static seedu.address.commons.util.StyleUtil.MESSAGE_INCORRECT_CAPITALIZATION;
+import static seedu.address.commons.util.StyleUtil.hasBalancedBrackets;
+import static seedu.address.commons.util.StyleUtil.hasConsecutiveSpaces;
+import static seedu.address.commons.util.StyleUtil.isCapitalizedWithLetters;
 
 /**
  * Represents a Person's name in the address book.
@@ -11,7 +15,7 @@ import java.util.Arrays;
  */
 public class Name {
 
-    public static final String MESSAGE_CONSTRAINTS = "Names must be less than 50 characters long, should not be blank, "
+    public static final String MESSAGE_CONSTRAINTS = "Names must be at most 50 characters long, should not be blank, "
             + "and names should only contain alphanumeric characters, spaces, and the following characters: "
             + ".,-'()/";
 
@@ -52,17 +56,15 @@ public class Name {
 
         if (hasConsecutiveSpaces(test)) {
             styleWarning.append(
-                    String.format("Style warning: Name `%s` contains multiple consecutive spaces.", test));
+                    String.format(MESSAGE_CONSECUTIVE_SPACES, Name.class.getSimpleName(), test));
         }
         if (!hasBalancedBrackets(test)) {
             styleWarning.append(
-                    String.format("Style warning: Name `%s` opening bracket "
-                            + "does not have a matching closing bracket.", test));
+                    String.format(MESSAGE_BRACKET_NOT_CLOSED, Name.class.getSimpleName(), test));
         }
         if (!isCapitalizedWithLetters(test)) {
             styleWarning.append(
-                    String.format("Style warning: Name `%s` does not have proper capitalization or alphabetical name.",
-                            test));
+                    String.format(MESSAGE_INCORRECT_CAPITALIZATION, Name.class.getSimpleName(), test));
         }
         return styleWarning.toString();
     }
@@ -92,39 +94,6 @@ public class Name {
         return fullName.hashCode();
     }
 
-    /**
-     * Returns true if the given string has a balanced bracket matching.
-     */
-    private static boolean hasBalancedBrackets(String s) {
-        int openBracketCount = 0;
-        for (char c : s.toCharArray()) {
-            if (c == '(') {
-                openBracketCount++;
-            } else if (c == ')') {
-                openBracketCount--;
-            }
-            if (openBracketCount < 0) {
-                return false;
-            }
-        }
-        return openBracketCount == 0;
-    }
 
-    /**
-     * Tests if for each word, the first letter character that appears is capitalized,
-     * with following letters that are not capitalized.
-     */
-    private static boolean isCapitalizedWithLetters(String test) {
-        final String regex = "[^a-zA-Z]*[A-Z][^A-Z]*";
-        String[] words = test.split(" ");
-        return Arrays.stream(words).allMatch(w -> w.matches(regex));
-    }
 
-    /**
-     * Tests if the string contains two or more consecutive spaces.
-     */
-    private static boolean hasConsecutiveSpaces(String test) {
-        final String regexDoubleSpace = ".* {2}.*";
-        return test.matches(regexDoubleSpace);
-    }
 }

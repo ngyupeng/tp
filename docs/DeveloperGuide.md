@@ -35,7 +35,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -69,7 +69,7 @@ The sections below give more details of each component.
 
 The `UI` component uses the JavaFx UI framework.
 The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.
-For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The layout of the UI components is shown in the below diagram. Note that the FXML components are
 initialized as placeholders in `MainWindow.java`, i.e. `CommandBoxPlaceholder`, with the actual `CommandBox` component
@@ -77,7 +77,7 @@ added to it as its children.
 
 <puml src="diagrams/UiLayoutDiagram.puml" alt="Layout of the UI Component"/>
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
@@ -94,7 +94,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -126,7 +126,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -152,7 +152,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-T10-4/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -181,7 +181,7 @@ A person will only be displayed on the list if it satisfies all the predicates w
 
 Given below is an example usage scenario and how the finding mechanism behaves at each step.
 
-Step 1. The user enters a valid `find` command with various options: E.g. `n/alex t/student enroll/>0`
+Step 1. The user enters a valid `find` command with various options: E.g. `n/alex t/student enroll/>2023`
 
 Step 2. This input is parsed by the `FindCommandParser` which for each option creates its own custom `Predicate<Person>`, such as `NameContainsKeywordsPredicate`, `TagsContainKeywordsPredicate`, `RolesContainSubstringsPredicate` and `EnrollmentYearPredicate`.
 
@@ -396,6 +396,15 @@ Below are some enhancements that could be considered to be added.
 ### Better warning messages of events/contacts of similar names
 
 
+### Simplify the display of consolidate function
+Currently, there are two separate areas that users can view the consolidated information.
+In the future, we can just simplify the UI to only show consolidated information in one area.
+
+### Specify whether error message lies in phone number or emergency phone number
+Currently, if either phone number and/or emergency phone number is empty after removing spaces and hyphens, 
+the user will receive an error message that states "Phone number cannot be empty after removing spaces and hyphens."
+This is currently not a major priority, since users can easily locate the source(s) of errors by checking up to 2 fields only.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
@@ -424,7 +433,22 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Adding a person
+
+1. Adding a new person
+
+   1. Test case: `add n/Bob Lim e/boblim@gmail.com a/Lim Chu Kang p/98761234`<br>
+      Expected: Person with name `Bob Lim` is added to the end of the list. Details of the person shown in the status message.
+
+1. Adding a person with a name already in the contact list
+
+   1. Prerequisites: Performed the previous step `Adding a new person`.
+
+   1. Test case: `add n/Bob Lim e/boblim2@gmail.com a/Lim Chu Kang p/98761234`<br>
+      Expected: No person is added. Error details shown in the status message.
+
+   1. Test case: `add n/Bob Lim e/boblim2@gmail.com a/Lim Chu Kang p/98761235`<br>
+      Expected: Person with name `Bob Lim` is added to the end of the list. Details of the person shown in the status message.
 
 ### Deleting a person
 
@@ -446,3 +470,58 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `delete 1`<br>
       Expected: First contact of the filtered list is deleted. Details of the deleted contact shown in the status message.
+
+### Adding an event
+
+1. Adding a new event
+
+    1. Test case: `add:event n/Sleepover d/10/10/2025-11/10/2025 info/Sleeping in school`<br>
+       Expected: Event with name `Sleepover` is added to the end of the list. Details of the event shown in the error message.
+
+1. Adding a event with a name already in the event list
+
+    1. Prerequisites: Performed the previous step `Adding a new event`.
+
+    1. Test case: `add:event n/Sleepover d/10/10/2025-11/10/2025 info/Sleeping in school in a classroom`<br>
+       Expected: No event is added. Error details shown in the status message.
+
+    1. Test case: `add:event n/Sleepover d/11/10/2025-12/10/2025 info/Sleeping in school`<br>
+       Expected: Event with name `Sleepover` is added to the end of the list. Details of the event shown in the error message.
+
+
+### Persistence of data
+
+1. Saving and loading data
+
+    1. Prerequisites: Performed all steps in the sections `Adding a person`, `Adding an event`.
+
+    1. Close the app window. Re-launch the app.
+       Expected: The contact and event lists remain the same as before.
+
+### Attending and unattending events
+
+1. Adding student to attendance list of event
+
+   1. Prerequisites: List all persons using the `list` command. At least 3 people and 1 event in the list.
+
+   1. Test case: `attend:event p/1 2 e/1`<br>
+      Expected: First and second persons in the contact list are added to the first event, if not already added. 
+
+   1. Test case: `attend:event p/1 e/1`<br>
+      Expected: First person in the contact list is not added to the first event. Details shown in the status message.
+
+   1. Test case: `event:student 1`<br>
+      Expected: First and second persons are in the attendance list of the first event.
+   
+1. Removing students from attendance list of event
+
+   1. Prerequisites: completed all steps in `Adding student to attendance list of event`. List all persons using the `list` command.
+
+   1. Test case: `unattend:event p/1 e/1`<br>
+      Expected: First person in the attendance list is removed from the first event. Details shown in the status message.
+
+   1. Test case: `unattend:event p/1 e/1`<br>
+      Expected: First person in the new attendance list is removed from the first event. Details shown in the status message.
+
+   1. Test case: `event:student 1`<br>
+      Expected: List of persons and attendance list have the same persons. The first two people originally in the attendance list of the first event are no longer there.

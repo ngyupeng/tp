@@ -43,13 +43,6 @@ public class JsonAdaptedEmergencyContactTest {
     }
 
     @Test
-    public void toModelType_invalidPhone_throwsIllegalValueException() {
-        JsonAdaptedEmergencyContact emergencyContact = new JsonAdaptedEmergencyContact(VALID_NAME, INVALID_PHONE);
-        String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, emergencyContact::toModelType);
-    }
-
-    @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
         JsonAdaptedEmergencyContact emergencyContact = new JsonAdaptedEmergencyContact(VALID_NAME, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());

@@ -46,15 +46,14 @@ public class NameTest {
         assertThrows(NullPointerException.class, () -> Name.getStyleWarningMessage(null));
 
         // warning message
-        assertFalse(Name.getStyleWarningMessage("Muscle-Man").isEmpty()); // capitalized in middle
         assertFalse(Name.getStyleWarningMessage("pEter jack").isEmpty()); // non-capitalized name
-        assertFalse(Name.getStyleWarningMessage("peter ()").isEmpty()); // word with no alphabets
         assertFalse(Name.getStyleWarningMessage("Peter (Dean").isEmpty()); // unbalanced brackets
         assertFalse(Name.getStyleWarningMessage("Too many  spaces").isEmpty()); // consecutive spaces
 
         // stylish names
         assertTrue(Name.getStyleWarningMessage("Peter Jack (Dean)").isEmpty());
-        assertTrue(Name.getStyleWarningMessage("Frank Kurt's Big Muscle-man").isEmpty());
+        assertTrue(Name.getStyleWarningMessage("Peter(Abc)").isEmpty()); // Brackets count as separate word
+        assertTrue(Name.getStyleWarningMessage("Frank Kurt's Big Muscle-Man").isEmpty()); // Dash count as separate word
     }
 
     @Test

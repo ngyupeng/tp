@@ -154,6 +154,7 @@ class JsonAdaptedPerson {
         }
 
         MessageCenter.appendEnd(Name.getStyleWarningMessage(name));
+        MessageCenter.appendEnd(Address.getStyleWarningMessage(address));
 
         final Name modelName = new Name(name);
         final Phone modelPhone = new Phone(phone);

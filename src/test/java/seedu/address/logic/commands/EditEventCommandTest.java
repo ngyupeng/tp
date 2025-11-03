@@ -98,7 +98,6 @@ public class EditEventCommandTest {
                 Messages.format(editedEvent));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        showEventAtIndex(expectedModel, INDEX_FIRST_EVENT);
         expectedModel.setEvent(model.getFilteredEventList().get(0), editedEvent);
 
         assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);

@@ -35,8 +35,8 @@ import seedu.address.model.tag.Tag;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
-    public static final String ERROR_MESSAGE_MISSING_COMPULSORY_PREFIX = "Missing compulsory prefixes: %s";
-    public static final String ERROR_MESSAGE_MISSING_FIRST_PREFIX = "There is an input without prefix after 'add'.";
+    public static final String ERROR_MESSAGE_MISSING_COMPULSORY_PREFIX = "Missing compulsory prefixes: %s. ";
+    public static final String ERROR_MESSAGE_MISSING_FIRST_PREFIX = "There is an input without prefix after 'add'. ";
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
@@ -115,10 +115,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(compilationOfErrorMessage);
         }
 
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        Name name = ParserUtil.parseNameWithWarning(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+        Address address = ParserUtil.parseAddressWithWarning(argMultimap.getValue(PREFIX_ADDRESS).get());
         Pin pin = ParserUtil.parsePin(argMultimap.getValue(PREFIX_PIN).isPresent()
                 ? argMultimap.getValue(PREFIX_PIN).get()
                 : "false");
@@ -135,7 +135,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                     enrollmentYear);
             return new AddCommand(person);
         } catch (IllegalArgumentException e) {
-            throw new ParseException(compilationOfErrorMessage + e.getMessage());
+            throw new ParseException(e.getMessage());
         }
     }
 

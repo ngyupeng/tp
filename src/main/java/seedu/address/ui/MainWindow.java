@@ -14,6 +14,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ConsolidateCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.ui.detailedpanel.DetailedPanel;
@@ -198,6 +199,11 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            // TODO: Replace with better way of checking.
+            if (commandResult.getFeedbackToUser().startsWith(ConsolidateCommand.MESSAGE_SUCCESS)) {
+                detailedPanel.showConsolidatedInfo(commandResult.getFeedbackToUser());
             }
 
             return commandResult;

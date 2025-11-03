@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.MessageCenter;
 import seedu.address.model.role.Role;
 
 /**
@@ -46,6 +47,8 @@ class JsonAdaptedRole {
         if (!Role.isValidRoleName(roleName)) {
             throw new IllegalValueException(Role.MESSAGE_CONSTRAINTS);
         }
+        MessageCenter.appendEnd(Role.getStyleWarningMessage(roleName));
+
         return new Role(roleName);
     }
 

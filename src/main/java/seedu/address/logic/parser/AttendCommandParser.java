@@ -38,6 +38,8 @@ public class AttendCommandParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PERSON, PREFIX_EVENT);
+
         Index eventIndex = parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
         List<Index> personIndexes = parseIndexes(argMultimap.getValue(PREFIX_PERSON).get());
         return new AttendCommand(eventIndex, personIndexes);

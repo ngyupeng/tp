@@ -452,6 +452,10 @@ While users are able to navigate the UI using just keyboard buttons, users may h
 since switching focus to the list always brings you to the first user instead of your previous position.
 This can be improved by remembering the user's previous selected person or event, and switching to that index.
 
+### Clear command too easy to accidentally delete data
+Typing `clear` or `clear:event` clears all the user's data without confirmation.
+We plan to add a confirmation check when users type in `clear` to prevent any accidental deletion of data.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ

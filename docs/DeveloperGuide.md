@@ -303,6 +303,7 @@ Use case ends.
 1. User inputs the details of the person to add
 2. AddressBook adds the person
 3. AddressBook shows the added person to the user
+
    Use case ends.
    
 - **Extensions**
@@ -353,6 +354,7 @@ Use case ends.
 - **MSS**
 1. User inputs the parameters he wants to search by
 2. AddressBook shows a filtered list of persons matching the requirements.
+
    Use case ends.
 
 - **Extensions**
@@ -367,6 +369,7 @@ Use case ends.
 1. User inputs the details of the event to add.
 2. AddressBook adds the event
 3. AddressBook shows the newly added event to the user
+
    Use case ends.
 
 - **Extensions**
@@ -385,6 +388,7 @@ Use case ends.
 - **MSS**
 1. User inputs the details to be updated
 2. AddressBook commits the edit
+
    Use case ends.
 
 - **Extensions**
@@ -403,11 +407,13 @@ Use case ends.
 1.  User views list of events (UC3)
 2.  User requests to delete a specific event in the list
 3.  AddressBook deletes the person
+
     Use case ends.
 
 - **Extensions**
 
-- 1a. The list is empty.  
+- 1a. The list is empty.
+
   Use case ends.
 
 - 2a. The given index is invalid.
@@ -434,6 +440,7 @@ Use case ends.
 
 - 2b. Some indexes are duplicated.
   - 2b1. AddressBook shows a warning message about the duplicated index.
+
   Use case resumes at step 3.
 
 

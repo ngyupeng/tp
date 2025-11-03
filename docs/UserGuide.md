@@ -125,13 +125,18 @@ about the corresponding item in `DetailedPanel`.
 
 Succesful commands should look like such:
 
-<img src="images/successfulCommand.png" height="120" width="800"/>
+<img src="images/successfulCommand.png" height="140" width="800"/>
 <br><br>
+
+<box type="info" seamless>
+
+**Note:** Scroll down to check for any warning messages!
+</box>
 
 ### Invalid Commands
 A warning message will be provided for invalid commands with text providing help on command usage:
 
-<img src="images/invalidCommand.png" height="120" width="800"/>
+<img src="images/invalidCommand.png" height="150" width="800"/>
 <br><br>
 
 ### Viewing help : `help`
@@ -321,7 +326,9 @@ Format: `attend:event e/EVENT_INDEX p/PERSON_INDEX [PERSON_INDEXES]...`
 Examples:
 * `attend:event e/1 p/3 5` Adds Bernice Yu and David Li to the 1st event.
 
-<br>
+<img src="images/attendEventCommand.png" width="550" height="400"/>
+<br><br>
+
 
 ### Removing event attendance : `unattend:event`
 
@@ -426,6 +433,10 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 ### Better warning messages of events/contacts of similar names
 
 
+### Add ability to filter the event list
+Users are able to search for specific persons using the `find` command. We plan to add a similar feature
+for event list in the future, to search for specific events by date, or within a specific time period.
+
 ### Simplify the display of consolidate function
 Currently, there are two separate areas that users can view the consolidated information.
 In the future, we can just simplify the UI to only show consolidated information in one area.
@@ -434,6 +445,11 @@ In the future, we can just simplify the UI to only show consolidated information
 Currently, if either phone number and/or emergency phone number is empty after removing spaces and hyphens, 
 the user will receive an error message that states "Phone number cannot be empty after removing spaces and hyphens."
 This is currently not a major priority, since users can easily locate the source(s) of errors by checking up to 2 fields only.
+
+### Improve navigability of product
+While users are able to navigate the UI using just keyboard buttons, users may have to scroll excessively within each list
+since switching focus to the list always brings you to the first user instead of your previous position.
+This can be improved by remembering the user's previous selected person or event, and switching to that index.
 
 --------------------------------------------------------------------------------------------------------------------
 

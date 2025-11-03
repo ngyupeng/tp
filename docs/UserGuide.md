@@ -261,7 +261,7 @@ Examples:
 Events are considered duplicates if they have the same name and duration.
 </box>
 
-<img src="images/addEvent.png" width="1500" height="500"/>
+<img src="images/addEvent.png" width="800" height="200"/>
 <br>
 
 ### Editing an event : `edit:event`
@@ -279,7 +279,7 @@ Examples:
 * `edit:event 1 n/new meeting d/2/10/2025 info/special meeting` Edits the 1st event
 * `edit:event 2 info/` Clears the description of the 2nd event
 
-<img src="images/editEvent.png" width="1500" height="500"/>
+<img src="images/editEvent.png" width="800" height="200"/>
 <br>
 
 ### Adding event attendance : `attend:event`
@@ -294,6 +294,7 @@ Format: `attend:event e/EVENT_INDEX p/PERSON_INDEX [PERSON_INDEXES]...`
 Examples:
 * `attend:event e/1 p/3 5` Adds Bernice Yu and David Li to the 1st event.
 
+<img src="images/attendEvent.png" width="500" height="150"/>
 <br>
 
 ### Removing event attendance : `unattend:event`

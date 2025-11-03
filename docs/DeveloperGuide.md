@@ -281,8 +281,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: UC1. Delete a person**
-
-- **MSS**
+- **Main Success Scenario (MSS)**
 1.  User views list of persons (UC3)
 2.  User requests to delete a specific person in the list
 3.  AddressBook deletes the person
@@ -293,7 +292,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 - 1a. The list is empty.  
 Use case ends.  
-
 
 - 2a. The given index is invalid.  
   - 2a1. AddressBook shows an error message. 
@@ -306,6 +304,7 @@ Use case ends.
 1. User inputs the details of the person to add
 2. AddressBook adds the person
 3. AddressBook shows the added person to the user
+
    Use case ends.
    
 - **Extensions**
@@ -321,10 +320,10 @@ Use case ends.
   Use case ends.
 
 
-**Use case: UC3. List all persons**
+**Use case: UC3. List all persons and events**
 - **MSS**
-1. User requests to list persons.
-2. AddressBook shows a list of persons. 
+1. User requests to list persons and events.
+2. AddressBook shows a list of persons and events.
 
    Use case ends.
 
@@ -339,6 +338,8 @@ Use case ends.
 1. User inputs the details to be updated
 2. AddressBook commits the edit
 
+   Use case ends.
+
 - **Extensions**
 * 1a. Missing details or incorrect format.
    * 1a1. AddressBook shows an error message.
@@ -352,6 +353,100 @@ Use case ends.
   Use case ends.
 
 
+**Use case: UC5. Find a person**
+- **MSS**
+1. User inputs the parameters he wants to search by
+2. AddressBook shows a filtered list of persons matching the requirements.
+
+   Use case ends.
+
+- **Extensions**
+* 1a. Missing details or incorrect search format.
+    * 1a1. AddressBook shows an error message.
+
+  Use case resumes at step 1.
+
+
+**Use case: UC6. Add an event**
+- **MSS**
+1. User inputs the details of the event to add.
+2. AddressBook adds the event
+3. AddressBook shows the newly added event to the user
+
+   Use case ends.
+
+- **Extensions**
+* 1a. Missing details or incorrect format.
+    * 1a1. AddressBook shows an error message.
+
+  Use case resumes at step 1.
+
+
+* 2a. A duplicate event already exists.
+    * 2a1. AddressBook shows an error message and the duplicated event.
+
+  Use case ends.
+
+**Use case: UC7. Edit an event’s details**
+- **MSS**
+1. User inputs the details to be updated
+2. AddressBook commits the edit
+
+   Use case ends.
+
+- **Extensions**
+* 1a. Missing details or incorrect format.
+    * 1a1. AddressBook shows an error message.
+
+  Use case resumes at step 1.
+
+* 2a. The edit results in an event becoming a duplicate of another.
+    * 2a1. AddressBook shows an error message and the duplicated event.
+
+  Use case ends.
+
+**Use case: UC8. Delete an event**
+- **MSS**
+1.  User views list of events (UC3)
+2.  User requests to delete a specific event in the list
+3.  AddressBook deletes the person
+
+    Use case ends.
+
+- **Extensions**
+
+- 1a. The list is empty.
+
+  Use case ends.
+
+- 2a. The given index is invalid.
+    - 2a1. AddressBook shows an error message.
+
+  Use case resumes at step 2.
+
+
+**Use case: UC9. Add attendance of students to an event**
+- **Preconditions:** User has already created the event (UC6)
+- **MSS**
+1. User searches for students to add (UC5)
+2. User inputs the students to be added to the attendance list of an existing event
+3. AddressBook adds the students to the attendance list
+4. AddressBook shows the event and new attendance list
+   Use case ends.
+
+- **Extensions**
+
+- 2a. At least one index is invalid.
+    - 2a1. AddressBook shows an error message.
+
+   Use case resumes at step 2.
+
+- 2b. Some indexes are duplicated.
+  - 2b1. AddressBook shows a warning message about the duplicated index.
+
+  Use case resumes at step 3.
+
+
 ### Non-Functional Requirements
 1. Data requirement:
    - Persistent through multiple accesses.
@@ -359,8 +454,8 @@ Use case ends.
    - The data should be stored locally and should be in a human editable text file.
 2. Performance Requirements:
    - The system should not take more than 2 seconds to respond to a user command.
-   - Similarly the system should not take more than 2 seconds to initialise and load up.
-   - It should also be stable and not crash.
+   - Similarly, the system should not take more than 2 seconds to initialise and load up.
+   - It should be stable and not crash often under regular operating environments.
    - Should be able to hold up to 300 contacts without a noticeable sluggishness in performance for typical usage.
 3. Environment Requirement:
    - The software should work on the Windows, Linux, and OS-X platforms.
@@ -377,7 +472,8 @@ Use case ends.
    - Features should not be hard-to-test.
 6. Project Scope
    - The system is not required to handle multiple users and assumes only a single user.
-   - The system is catered towards CCA teachers and should not handle other aspects of student lives including grades in school subjects (math, english, etc).
+   - The system is catered towards CCA teachers and should not handle other aspects of student lives including grades
+   in school subjects (math, english, etc).
 
 
 ### Glossary
@@ -386,6 +482,11 @@ Use case ends.
 * **Private contact detail**: Personal contact details that should be hidden, including phone numbers, year of study.
 * **AddressBook**: Our product that allows CCA teachers to handle students’ contacts
 * **Brownfield project**: Our product that is developed and deployed upon an existing product.
+* **Co-curricular Activities (CCA)**: Non-academic activities (sports, arts, uniform groups, etc) held at schools
+  that fosters holistic growth
+* **Command Line Interface (CLI)**: Text-based user interface that allows inputting text commands to perform actions.
+* **Graphical User Interface (GUI)**: Relies on visual elements and clicking to allow users to perform actions.
+* **Main Success Scenario (MSS)**: Outlines the most straightforward interaction under the use case.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Planned Enhancements**

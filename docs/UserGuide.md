@@ -261,6 +261,7 @@ Examples:
 Events are considered duplicates if they have the same name and duration.
 </box>
 
+<img src="images/addEvent.png" width="1500" height="500"/>
 <br>
 
 ### Editing an event : `edit:event`
@@ -278,6 +279,7 @@ Examples:
 * `edit:event 1 n/new meeting d/2/10/2025 info/special meeting` Edits the 1st event
 * `edit:event 2 info/` Clears the description of the 2nd event
 
+<img src="images/editEvent.png" width="1500" height="500"/>
 <br>
 
 ### Adding event attendance : `attend:event`

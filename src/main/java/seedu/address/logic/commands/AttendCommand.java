@@ -27,7 +27,7 @@ import seedu.address.model.person.Person;
 public class AttendCommand extends Command {
     public static final String COMMAND_WORD = "attend:event";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds the list of person at the given indexes to the attendance list of an event.\n"
+            + ": Adds the list of persons at the given indexes to the attendance list of an event.\n"
             + "Parameters: "
             + PREFIX_EVENT + "EVENT_INDEX "
             + PREFIX_PERSON + "PERSON_INDEX [MORE_INDEXES]...\n"

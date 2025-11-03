@@ -324,6 +324,9 @@ public class ParserUtil {
         List<Index> indexSet = new ArrayList<>();
         String[] indexList = indexes.split(" ");
         for (String index : indexList) {
+            if (index.isEmpty()) {
+                continue;
+            }
             Index i = parseIndex(index);
             if (indexSet.contains(i)) {
                 MessageCenter.appendEnd(
@@ -331,6 +334,9 @@ public class ParserUtil {
             } else {
                 indexSet.add(i);
             }
+        }
+        if (indexSet.isEmpty()) {
+            throw new ParseException(MESSAGE_EMPTY_INDEX);
         }
         return indexSet;
     }

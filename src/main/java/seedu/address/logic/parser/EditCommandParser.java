@@ -77,7 +77,11 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         final boolean hasEmergencyName = argMultimap.getValue(PREFIX_EMERGENCY_NAME).isPresent();
         final boolean hasEmergencyPhone = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).isPresent();
-        if (hasEmergencyName || hasEmergencyPhone) {
+
+        if (hasEmergencyName && hasEmergencyPhone && argMultimap.getValue(PREFIX_EMERGENCY_NAME).get().isBlank()
+                && argMultimap.getValue(PREFIX_EMERGENCY_PHONE).get().isBlank()) {
+            editPersonDescriptor.setEmergencyContact(new EmergencyContact());
+        } else if (hasEmergencyName || hasEmergencyPhone) {
             Name newEmergencyName = null;
             if (hasEmergencyName) {
                 newEmergencyName = ParserUtil.parseName(argMultimap.getValue(PREFIX_EMERGENCY_NAME).get());

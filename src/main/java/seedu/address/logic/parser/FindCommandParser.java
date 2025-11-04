@@ -25,6 +25,8 @@ import seedu.address.model.tag.TagsContainKeywordsPredicate;
  * Parses input arguments, prefix field, and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
+    public static final String ERROR_MESSAGE_MISSING_FIRST_PREFIX = "There is an input without "
+            + "prefix after 'find'. ";
 
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
@@ -38,7 +40,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                     PREFIX_ROLE, PREFIX_ENROLL_YEAR);
 
             if (!argMultimap.getPreamble().isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                throw new ParseException(ERROR_MESSAGE_MISSING_FIRST_PREFIX);
             }
 
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_TAG, PREFIX_ENROLL_YEAR);

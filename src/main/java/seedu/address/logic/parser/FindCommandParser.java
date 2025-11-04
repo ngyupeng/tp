@@ -25,6 +25,11 @@ import seedu.address.model.tag.TagsContainKeywordsPredicate;
  * Parses input arguments, prefix field, and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
+    public static final String ERROR_MESSAGE_MISSING_FIRST_PREFIX = "There is an input without "
+            + "prefix after 'find'. ";
+    public static final String EMPTY_FIELD = "Empty field %s.";
+
+    public static final String EMPTY_PREDICATE = "At least one field needs to be provided.";
 
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
@@ -33,73 +38,76 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform to the expected format
      */
     public FindCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG,
-                PREFIX_ROLE, PREFIX_ENROLL_YEAR);
+        try {
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG,
+                    PREFIX_ROLE, PREFIX_ENROLL_YEAR);
 
-        if (!argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_TAG, PREFIX_ENROLL_YEAR);
-
-        List<Predicate<Person>> predicates = new ArrayList<Predicate<Person>>();
-
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            String name = argMultimap.getValue(PREFIX_NAME).get();
-            String[] nameKeywords = name.split("\\s+");
-
-            if (name.isEmpty()) {
-                throw new ParseException(String.format(
-                        MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            if (!argMultimap.getPreamble().isEmpty()) {
+                throw new ParseException(ERROR_MESSAGE_MISSING_FIRST_PREFIX);
             }
 
-            // Throws an error if invalid name is supplied
-            for (String s : nameKeywords) {
-                ParserUtil.parseName(s);
-            }
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_TAG, PREFIX_ENROLL_YEAR);
 
-            predicates.add(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-        }
+            List<Predicate<Person>> predicates = new ArrayList<Predicate<Person>>();
 
-        if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
-            String tag = argMultimap.getValue(PREFIX_TAG).get();
-            String[] tagKeywords = tag.split("\\s+");
+            if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+                String name = argMultimap.getValue(PREFIX_NAME).get();
+                String[] nameKeywords = name.split("\\s+");
 
-            if (tag.isEmpty()) {
-                throw new ParseException(String.format(
-                        MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-            }
-
-            // Throws an error if invalid tag is supplied
-            for (String s : tagKeywords) {
-                ParserUtil.parseTag(s);
-            }
-
-            predicates.add(new TagsContainKeywordsPredicate(Arrays.asList(tagKeywords)));
-        }
-
-        if (argMultimap.getValue(PREFIX_ROLE).isPresent()) {
-            List<String> roleStrings = argMultimap.getAllValues(PREFIX_ROLE);
-
-            // Throws an error if invalid role is supplied
-            for (String s : roleStrings) {
-                if (!Role.isValidFindString(s.trim())) {
-                    throw new ParseException(Role.FIND_MESSAGE_CONSTRAINTS);
+                if (name.isEmpty()) {
+                    throw new ParseException(String.format(EMPTY_FIELD, PREFIX_NAME));
                 }
+
+                // Throws an error if invalid name is supplied
+                for (String s : nameKeywords) {
+                    ParserUtil.parseName(s);
+                }
+
+                predicates.add(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
             }
 
-            predicates.add(new RolesContainSubstringsPredicate(roleStrings));
-        }
+            if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
+                String tag = argMultimap.getValue(PREFIX_TAG).get();
+                String[] tagKeywords = tag.split("\\s+");
 
-        if (argMultimap.getValue(PREFIX_ENROLL_YEAR).isPresent()) {
-            String enrollmentConstraint = argMultimap.getValue(PREFIX_ENROLL_YEAR).get();
-            predicates.add(new EnrollmentYearPredicate(enrollmentConstraint));
-        }
+                if (tag.isEmpty()) {
+                    throw new ParseException(String.format(EMPTY_FIELD, PREFIX_TAG));
+                }
 
-        if (predicates.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
+                // Throws an error if invalid tag is supplied
+                for (String s : tagKeywords) {
+                    ParserUtil.parseTag(s);
+                }
 
-        return new FindCommand(new MultiPredicate(predicates));
+                predicates.add(new TagsContainKeywordsPredicate(Arrays.asList(tagKeywords)));
+            }
+
+            if (argMultimap.getValue(PREFIX_ROLE).isPresent()) {
+                List<String> roleStrings = argMultimap.getAllValues(PREFIX_ROLE);
+
+                // Throws an error if invalid role is supplied
+                for (String s : roleStrings) {
+                    if (!Role.isValidFindString(s.trim())) {
+                        throw new ParseException(Role.FIND_MESSAGE_CONSTRAINTS);
+                    }
+                }
+
+                predicates.add(new RolesContainSubstringsPredicate(roleStrings));
+            }
+
+            if (argMultimap.getValue(PREFIX_ENROLL_YEAR).isPresent()) {
+                String enrollmentConstraint = argMultimap.getValue(PREFIX_ENROLL_YEAR).get();
+                predicates.add(new EnrollmentYearPredicate(enrollmentConstraint));
+            }
+
+            if (predicates.isEmpty()) {
+                throw new ParseException(EMPTY_PREDICATE);
+            }
+
+            return new FindCommand(new MultiPredicate(predicates));
+        } catch (ParseException pe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE), pe);
+        }
     }
 }

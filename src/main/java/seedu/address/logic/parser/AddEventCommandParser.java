@@ -5,6 +5,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddEventCommand;
@@ -19,6 +21,8 @@ import seedu.address.model.event.EventName;
  * Parses input arguments and creates a new AddEventCommand object
  */
 public class AddEventCommandParser implements Parser<AddEventCommand> {
+    public static final String ERROR_MESSAGE_MISSING_FIRST_PREFIX = "There is an input without "
+        + "prefix after 'add:event'. ";
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
@@ -28,6 +32,10 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    private static boolean haveUntokenInput(ArgumentMultimap argMultimap) {
+        return !argMultimap.getPreamble().isEmpty();
+    }
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddEventCommand
      * and returns an AddEventCommand object for execution.
@@ -35,25 +43,42 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddEventCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DURATION,
-                PREFIX_DESCRIPTION);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DURATION)
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
-        }
-
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DURATION, PREFIX_DESCRIPTION);
-        EventName name = ParserUtil.parseEventNameWithWarning(argMultimap.getValue(PREFIX_NAME).get());
-        Duration duration = ParserUtil.parseDuration(argMultimap.getValue(PREFIX_DURATION).get());
-        Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).orElse(""));
-        Attendance attendance = new Attendance();
-
         try {
-            Event event = new Event(name, duration, description, attendance);
-            return new AddEventCommand(event);
-        } catch (IllegalArgumentException e) {
-            throw new ParseException(e.getMessage());
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DURATION,
+                    PREFIX_DESCRIPTION);
+
+            if (haveUntokenInput(argMultimap)) {
+                throw new ParseException(ERROR_MESSAGE_MISSING_FIRST_PREFIX);
+            }
+
+            List<String> prefixes = new ArrayList<>();
+            if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) {
+                prefixes.add(PREFIX_NAME.getPrefix());
+            }
+            if (!arePrefixesPresent(argMultimap, PREFIX_DURATION)) {
+                prefixes.add(PREFIX_DURATION.getPrefix());
+            }
+            if (!prefixes.isEmpty()) {
+                throw new ParseException(
+                        String.format(AddCommandParser.ERROR_MESSAGE_MISSING_COMPULSORY_PREFIX,
+                                String.join(", ", prefixes)));
+            }
+
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DURATION, PREFIX_DESCRIPTION);
+            EventName name = ParserUtil.parseEventNameWithWarning(argMultimap.getValue(PREFIX_NAME).get());
+            Duration duration = ParserUtil.parseDuration(argMultimap.getValue(PREFIX_DURATION).get());
+            Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).orElse(""));
+            Attendance attendance = new Attendance();
+
+            try {
+                Event event = new Event(name, duration, description, attendance);
+                return new AddEventCommand(event);
+            } catch (IllegalArgumentException e) {
+                throw new ParseException(e.getMessage());
+            }
+        } catch (ParseException pe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE), pe);
         }
     }
 

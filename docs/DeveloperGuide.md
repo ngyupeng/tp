@@ -494,9 +494,13 @@ Use case ends.
 Team Size: 5
 
 ### Better validation of enrollment year
+Users are able to input any enrollment year from 1 to 9999, which is not realistic. We plan to implement stricter
+bounds so that the user cannot input wrong years.
 
 ### Better warning messages of events/contacts of similar names
-
+While we warn users to follow the style guide to reduce the possibility of inputting duplicate names and phones that are not detected,
+e.g. `John Doe` vs `john doe`, but it may still happen in situations such as changing the order of surname and given name.
+We plan to implement a smarter detection system to point out these potential duplicates to users.
 
 ### Add ability to filter the event list
 Users are able to search for specific persons using the `find` command. We plan to add a similar feature

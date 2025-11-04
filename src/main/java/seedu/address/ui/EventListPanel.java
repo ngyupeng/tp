@@ -44,7 +44,15 @@ public class EventListPanel extends UiPart<Region> {
                 .selectedItemProperty()
                 .addListener((obs, old, newEvent) -> {
                     selectedEvent.setValue(newEvent);
+                    if (newEvent != null) {
+                        eventListView.requestFocus();
+                    }
                 });
+        eventListView.focusedProperty().addListener(((obs, old, newValue) -> {
+            if (newValue && !eventList.isEmpty()) {
+                selectedEvent.set(eventList.get(0));
+            }
+        }));
 
         updateZoomInSelectedPerson(zoomIn);
         zoomIn.addListener((obs, old, newZoom) -> {

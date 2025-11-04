@@ -128,10 +128,12 @@ public class EditCommand extends Command {
             throw new CommandException(e.getMessage());
         }
 
+        boolean hasChangedEmergencyContact = !Objects.equals(personToEdit.getEmergencyContact(),
+                editedPerson.getEmergencyContact());
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
-        if (personToEdit.isSamePerson(editedPerson)) {
+        if (personToEdit.equals(editedPerson) && !hasChangedEmergencyContact) {
             throw new CommandException(MESSAGE_EDIT_PERSON_NO_CHANGE);
         }
 

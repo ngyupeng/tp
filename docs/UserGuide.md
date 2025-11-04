@@ -282,8 +282,8 @@ Add events to your address book, with the given fields given there are no duplic
 Format: `add:event n/NAME d/(d/M/yyyy or d/M/yyyy-d/M/yyyy) [info/DESCRIPTION]`
 
 Examples:
-* `add:event n/meeting d/1/10/2025 info/routine meeting`
-* `add:event n/competition d/1/10/2025-5/10/2025 info/important competition`
+* `add:event n/Meeting d/1/10/2025 info/Routine meeting`
+* `add:event n/Competition d/1/10/2025-5/10/2025 info/Important competition`
 
 <box type="tip">
 
@@ -313,7 +313,7 @@ Format: `edit:event INDEX [n/NAME] [d/(d/M/yyyy or d/M/yyyy-d/M/yyyy)] [info/DES
 * You can remove the event's description by typing `info/` without specifying any description after it.
 
 Examples:
-* `edit:event 1 n/new meeting d/2/10/2025 info/special meeting` Edits the 1st event
+* `edit:event 1 n/New meeting d/2/10/2025 info/Special meeting` Edits the 1st event
 * `edit:event 2 info/` Clears the description of the 2nd event
 
 <img src="images/editEvent.png" width="800" height="200"/>
@@ -343,7 +343,7 @@ Format: `unattend:event e/EVENT_INDEX p/PERSON_INDEX [PERSON_INDEXES]...`
 
 * Removes the attendance of the persons at the given indexes in the attendance list
   from the event at the given event index.
-* Note that `PERSON_INDEX` refers to the index of the person in the attendance list under the event,
+* Note that `PERSON_INDEXES` refers to the index of the person in the attendance list under the event,
   and not the person list.
 
 Examples:

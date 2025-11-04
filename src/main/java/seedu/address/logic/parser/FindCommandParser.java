@@ -27,6 +27,9 @@ import seedu.address.model.tag.TagsContainKeywordsPredicate;
 public class FindCommandParser implements Parser<FindCommand> {
     public static final String ERROR_MESSAGE_MISSING_FIRST_PREFIX = "There is an input without "
             + "prefix after 'find'. ";
+    public static final String EMPTY_FIELD = "Empty field %s.";
+
+    public static final String EMPTY_PREDICATE = "At least one field needs to be provided.";
 
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
@@ -52,8 +55,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                 String[] nameKeywords = name.split("\\s+");
 
                 if (name.isEmpty()) {
-                    throw new ParseException(String.format(
-                            MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                    throw new ParseException(String.format(EMPTY_FIELD, PREFIX_NAME));
                 }
 
                 // Throws an error if invalid name is supplied
@@ -69,8 +71,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                 String[] tagKeywords = tag.split("\\s+");
 
                 if (tag.isEmpty()) {
-                    throw new ParseException(String.format(
-                            MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                    throw new ParseException(String.format(EMPTY_FIELD, PREFIX_TAG));
                 }
 
                 // Throws an error if invalid tag is supplied
@@ -100,7 +101,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             }
 
             if (predicates.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                throw new ParseException(EMPTY_PREDICATE);
             }
 
             return new FindCommand(new MultiPredicate(predicates));

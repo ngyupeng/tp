@@ -102,6 +102,7 @@ about the corresponding item in `DetailedPanel`.
 
 **Duplicate handling**
 * We require that no two persons have the exact same `Name` and `Phone` combination.
+* We require that no two events have the exact same `Name` and `Duration` combination.
 
 </box>
 
@@ -126,13 +127,18 @@ about the corresponding item in `DetailedPanel`.
 
 Succesful commands should look like such:
 
-<img src="images/successfulCommand.png" height="120" width="800"/>
+<img src="images/successfulCommand.png" height="140" width="800"/>
 <br><br>
+
+<box type="info" seamless>
+
+**Note:** Scroll down to check for any warning messages!
+</box>
 
 ### Invalid Commands
 A warning message will be provided for invalid commands with text providing help on command usage:
 
-<img src="images/invalidCommand.png" height="120" width="800"/>
+<img src="images/invalidCommand.png" height="150" width="800"/>
 <br><br>
 
 ### Viewing help : `help`
@@ -276,8 +282,8 @@ Add events to your address book, with the given fields given there are no duplic
 Format: `add:event n/NAME d/(d/M/yyyy or d/M/yyyy-d/M/yyyy) [info/DESCRIPTION]`
 
 Examples:
-* `add:event n/meeting d/1/10/2025 info/routine meeting`
-* `add:event n/competition d/1/10/2025-5/10/2025 info/important competition`
+* `add:event n/Meeting d/1/10/2025 info/Routine meeting`
+* `add:event n/Competition d/1/10/2025-5/10/2025 info/Important competition`
 
 <box type="tip">
 
@@ -307,7 +313,7 @@ Format: `edit:event INDEX [n/NAME] [d/(d/M/yyyy or d/M/yyyy-d/M/yyyy)] [info/DES
 * You can remove the event's description by typing `info/` without specifying any description after it.
 
 Examples:
-* `edit:event 1 n/new meeting d/2/10/2025 info/special meeting` Edits the 1st event
+* `edit:event 1 n/New meeting d/2/10/2025 info/Special meeting` Edits the 1st event
 * `edit:event 2 info/` Clears the description of the 2nd event
 
 <img src="images/editEvent.png" width="800" height="200"/>
@@ -325,8 +331,9 @@ Format: `attend:event e/EVENT_INDEX p/PERSON_INDEX [PERSON_INDEXES]...`
 Examples:
 * `attend:event e/1 p/3 5` Adds Bernice Yu and David Li to the 1st event.
 
-<img src="images/attendEvent.png" width="500" height="150"/>
-<br>
+<img src="images/attendEventCommand.png" width="550" height="400"/>
+<br><br>
+
 
 ### Removing event attendance : `unattend:event`
 
@@ -336,7 +343,7 @@ Format: `unattend:event e/EVENT_INDEX p/PERSON_INDEX [PERSON_INDEXES]...`
 
 * Removes the attendance of the persons at the given indexes in the attendance list
   from the event at the given event index.
-* Note that `PERSON_INDEX` refers to the index of the person in the attendance list under the event,
+* Note that `PERSON_INDEXES` refers to the index of the person in the attendance list under the event,
   and not the person list.
 
 Examples:
@@ -426,10 +433,17 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 ## Planned updates
 
 ### Better validation of enrollment year
-
+Users are able to input any enrollment year from 1 to 9999, which is not realistic. We plan to implement stricter
+bounds so that the user cannot input wrong years.
 
 ### Better warning messages of events/contacts of similar names
+While we warn users to follow the style guide to reduce the possibility of inputting duplicate names and phones that are not detected,
+e.g. `John Doe` vs `john doe`, but it may still happen in situations such as changing the order of surname and given name.
+We plan to implement a smarter detection system to point out these potential duplicates to users.
 
+### Add ability to filter the event list
+Users are able to search for specific persons using the `find` command. We plan to add a similar feature
+for event list in the future, to search for specific events by date, or within a specific time period.
 
 ### Simplify the display of consolidate function
 Currently, there are two separate areas that users can view the consolidated information.
@@ -439,6 +453,15 @@ In the future, we can just simplify the UI to only show consolidated information
 Currently, if either phone number and/or emergency phone number is empty after removing spaces and hyphens, 
 the user will receive an error message that states "Phone number cannot be empty after removing spaces and hyphens."
 This is currently not a major priority, since users can easily locate the source(s) of errors by checking up to 2 fields only.
+
+### Improve navigability of product
+While users are able to navigate the UI using just keyboard buttons, users may have to scroll excessively within each list
+since switching focus to the list always brings you to the first user instead of your previous position.
+This can be improved by remembering the user's previous selected person or event, and switching to that index.
+
+### Clear command too easy to accidentally delete data
+Typing `clear` or `clear:event` clears all the user's data without confirmation.
+We plan to add a confirmation check when users type in `clear` to prevent any accidental deletion of data.
 
 --------------------------------------------------------------------------------------------------------------------
 

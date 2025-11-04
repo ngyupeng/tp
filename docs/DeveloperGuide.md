@@ -493,12 +493,22 @@ Use case ends.
 
 Team Size: 5
 
-1. Better validation of enrollment year
+### Better validation of enrollment year
+Users are able to input any enrollment year from 1 to 9999, which is not realistic. We plan to implement stricter
+bounds so that the user cannot input wrong years.
 
-2. Better warning messages of events/contacts of similar names
+### Better warning messages of events/contacts of similar names
+While we warn users to follow the style guide to reduce the possibility of inputting duplicate names and phones that are not detected,
+e.g. `John Doe` vs `john doe`, but it may still happen in situations such as changing the order of surname and given name.
+We plan to implement a smarter detection system to point out these potential duplicates to users.
 
-3. Order of members in the event's attendance list is based on their add date. We plan to add the ability to sort and
-filter the attendance list.
+### Add ability to filter the event list
+Users are able to search for specific persons using the `find` command. We plan to add a similar feature
+for event list in the future, to search for specific events by date, or within a specific time period.
+
+### Add functionality to event attendance list
+Order of members in the event's attendance list is based on their add date.
+We plan to add the ability to sort and filter the attendance list.
 
 ### Simplify the display of consolidate function
 Currently, there are two separate areas that users can view the consolidated information.
@@ -508,6 +518,15 @@ In the future, we can just simplify the UI to only show consolidated information
 Currently, if either phone number and/or emergency phone number is empty after removing spaces and hyphens, 
 the user will receive an error message that states "Phone number cannot be empty after removing spaces and hyphens."
 This is currently not a major priority, since users can easily locate the source(s) of errors by checking up to 2 fields only.
+
+### Improve navigability of product
+While users are able to navigate the UI using just keyboard buttons, users may have to scroll excessively within each list
+since switching focus to the list always brings you to the first user instead of your previous position.
+This can be improved by remembering the user's previous selected person or event, and switching to that index.
+
+### Clear command too easy to accidentally delete data
+Typing `clear` or `clear:event` clears all the user's data without confirmation.
+We plan to add a confirmation check when users type in `clear` to prevent any accidental deletion of data.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -542,16 +561,21 @@ testers are expected to do more *exploratory* testing.
 1. Adding a new person
 
    1. Test case: `add n/Bob Lim e/boblim@gmail.com a/Lim Chu Kang p/98761234`<br>
-      Expected: Person with name `Bob Lim` is added to the end of the list. Details of the person shown in the status message.
+      Expected: Person with name `Bob Lim` is added to the end of the list.<br>
+      Details of the person shown in the status message.
+
+   2. Test case: `add n/bob lim e/boblim@gmail.com a/Lim Chu Kang p/98761234;`<br>
+      Expected: Person with name `bob Lim` is added to the end of the list.<br>
+      Details of the person shown in the status message. Style warning for name and phone is shown in the status message.
 
 1. Adding a person with a name already in the contact list
 
    1. Prerequisites: Performed the previous step `Adding a new person`.
 
-   1. Test case: `add n/Bob Lim e/boblim2@gmail.com a/Lim Chu Kang p/98761234`<br>
+   1. Test case (Different email): `add n/Bob Lim e/boblim2@gmail.com a/Lim Chu Kang p/98761234`<br>
       Expected: No person is added. Error details shown in the status message.
 
-   1. Test case: `add n/Bob Lim e/boblim2@gmail.com a/Lim Chu Kang p/98761235`<br>
+   1. Test case (Different phone number): `add n/Bob Lim e/boblim2@gmail.com a/Lim Chu Kang p/98761235`<br>
       Expected: Person with name `Bob Lim` is added to the end of the list. Details of the person shown in the status message.
 
 ### Deleting a person
@@ -566,7 +590,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete 0`<br>
       Expected: No person is deleted. Error details shown in the status message.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x not a positive integer, or larger than the list size)<br>
       Expected: Similar to previous.
 
 1. Deleting a person while only a filtered list is being shown
@@ -582,7 +606,7 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `add:event n/Sleepover d/10/10/2025-11/10/2025 info/Sleeping in school`<br>
        Expected: Event with name `Sleepover` is added to the end of the list. Details of the event shown in the error message.
 
-1. Adding a event with a name already in the event list
+1. Adding an event with a name already in the event list
 
     1. Prerequisites: Performed the previous step `Adding a new event`.
 
@@ -601,6 +625,42 @@ testers are expected to do more *exploratory* testing.
 
     1. Close the app window. Re-launch the app.
        Expected: The contact and event lists remain the same as before.
+
+### Editing persons and events
+
+1. Editing a person's details
+
+   1. Prerequisites: List all persons using the `list` command. At least 2 people in the list.
+
+   2. Test case: `edit 1 n/Ben Park p/9111 8930`<br>
+      Expected: First person in the contact list now has name `Ben Park` and phone number `91118930` (No spaces).
+
+   3. Test case: `edit 2 n/Ben Park p/9111 8930`<br>
+      Expected: Second person not edited. Error details shown in the status message.
+
+   4. Test case: `edit 2 n/ben Park p/9111 8930;`<br>
+      Expected: Second person in the contact list now has name `ben Park` and phone number `91118930;`.<br>
+      A style warning about the name and phone number is shown in the status message.
+
+   5. Test case: `edit 0 n/Test`<br>
+      Expected: No person is edited. Error details shown in the status message.
+
+   1. Other incorrect commands to try: `edit`, `edit x n/Test` (where x not a positive integer, or larger than the list size).
+
+2. Editing an event's details
+
+   1. Prerequisites: List all events using the `list` command. At least 2 events in the list.
+
+   2. Test case: `edit:event 1 n/Exco Leader Meeting d/1/10/2025-2/10/2025`<br>
+      Expected: First event in the event list now has name `Exco Leader Meeting` and duration `1/10/2025-2/10/2025`.
+
+   3. Test case: `edit:event 2 n/Exco Leader Meeting d/1/10/2025-2/10/2025`<br>
+      Expected: Second event not edited. Error details shown in the status message.
+
+   4. Test case: `edit:event 0 n/Invalid Index`<br>
+      Expected: No event is edited. Error details shown in the status message.
+
+   5. Other incorrect commands to try: `edit:event`, `edit:event x n/Test` (where x not a positive integer, or larger than the list size).
 
 ### Attending and unattending events
 
@@ -627,5 +687,6 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `unattend:event p/1 e/1`<br>
       Expected: First person in the new attendance list is removed from the first event. Details shown in the status message.
 
-   1. Test case: `event:student 1`<br>
-      Expected: List of persons and attendance list have the same persons. The first two people originally in the attendance list of the first event are no longer there.
+      1. Test case: `event:student 1`<br>
+         Expected: List of persons and attendance list have the same persons.
+         The first two people originally in the attendance list of the first event are no longer there.

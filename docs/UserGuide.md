@@ -262,6 +262,7 @@ Events are considered duplicates if they have the same name and duration.
 </box>
 
 <img src="images/addEvent.png" width="800" height="200"/>
+<img src="images/addEvent2.png" width="800" height="300"/>
 <br>
 
 ### Editing an event : `edit:event`

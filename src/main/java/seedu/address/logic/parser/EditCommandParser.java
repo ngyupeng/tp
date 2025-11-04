@@ -41,71 +41,71 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_PIN, PREFIX_ROLE, PREFIX_EMERGENCY_NAME, PREFIX_EMERGENCY_PHONE,
-                        PREFIX_TAG, PREFIX_ENROLL_YEAR);
+        try {
+            ArgumentMultimap argMultimap =
+                    ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                            PREFIX_ADDRESS, PREFIX_PIN, PREFIX_ROLE, PREFIX_EMERGENCY_NAME, PREFIX_EMERGENCY_PHONE,
+                            PREFIX_TAG, PREFIX_ENROLL_YEAR);
 
-        // Checks if preamble consists of strictly integers.
-        if (argMultimap.getPreamble().isEmpty() || !argMultimap.getPreamble().matches("[0-9]*")) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-        }
+            Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
 
-        Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_PIN,
+                    PREFIX_EMERGENCY_NAME, PREFIX_EMERGENCY_PHONE, PREFIX_ADDRESS, PREFIX_ENROLL_YEAR);
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_PIN,
-                PREFIX_EMERGENCY_NAME, PREFIX_EMERGENCY_PHONE, PREFIX_ADDRESS, PREFIX_ENROLL_YEAR);
+            EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editPersonDescriptor.setName(ParserUtil.parseNameWithWarning(argMultimap.getValue(PREFIX_NAME).get()));
-        }
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
-        }
-        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
-        }
-        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editPersonDescriptor.setAddress(ParserUtil.parseAddressWithWarning(
-                    argMultimap.getValue(PREFIX_ADDRESS).get()));
-        }
-        if (argMultimap.getValue(PREFIX_PIN).isPresent()) {
-            editPersonDescriptor.setPin(ParserUtil.parsePin(argMultimap.getValue(PREFIX_PIN).get()));
-        }
-
-        final boolean hasEmergencyName = argMultimap.getValue(PREFIX_EMERGENCY_NAME).isPresent();
-        final boolean hasEmergencyPhone = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).isPresent();
-
-        if (hasEmergencyName && hasEmergencyPhone && argMultimap.getValue(PREFIX_EMERGENCY_NAME).get().isBlank()
-                && argMultimap.getValue(PREFIX_EMERGENCY_PHONE).get().isBlank()) {
-            editPersonDescriptor.setEmergencyContact(new EmergencyContact());
-        } else if (hasEmergencyName || hasEmergencyPhone) {
-            Name newEmergencyName = null;
-            if (hasEmergencyName) {
-                newEmergencyName = ParserUtil.parseName(argMultimap.getValue(PREFIX_EMERGENCY_NAME).get());
+            if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+                editPersonDescriptor.setName(ParserUtil.parseNameWithWarning(argMultimap.getValue(PREFIX_NAME).get()));
             }
-            Phone newEmergencyPhone = null;
-            if (hasEmergencyPhone) {
-                newEmergencyPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_EMERGENCY_PHONE).get());
+            if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+                editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
             }
-            EmergencyContact newEmergencyContact = new EmergencyContact(newEmergencyName, newEmergencyPhone);
-            editPersonDescriptor.setEmergencyContact(newEmergencyContact);
-        }
+            if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+                editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+            }
+            if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+                editPersonDescriptor.setAddress(ParserUtil.parseAddressWithWarning(
+                        argMultimap.getValue(PREFIX_ADDRESS).get()));
+            }
+            if (argMultimap.getValue(PREFIX_PIN).isPresent()) {
+                editPersonDescriptor.setPin(ParserUtil.parsePin(argMultimap.getValue(PREFIX_PIN).get()));
+            }
 
-        if (argMultimap.getValue(PREFIX_ENROLL_YEAR).isPresent()) {
-            editPersonDescriptor.setEnrollmentYear(ParserUtil.parseEnrollmentYear(
-                    argMultimap.getValue(PREFIX_ENROLL_YEAR).get()));
-        }
-        parseRolesForEdit(argMultimap.getAllValues(PREFIX_ROLE)).ifPresent(editPersonDescriptor::setRoles);
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            final boolean hasEmergencyName = argMultimap.getValue(PREFIX_EMERGENCY_NAME).isPresent();
+            final boolean hasEmergencyPhone = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).isPresent();
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
-        }
+            if (hasEmergencyName && hasEmergencyPhone && argMultimap.getValue(PREFIX_EMERGENCY_NAME).get().isBlank()
+                    && argMultimap.getValue(PREFIX_EMERGENCY_PHONE).get().isBlank()) {
+                editPersonDescriptor.setEmergencyContact(new EmergencyContact());
+            } else if (hasEmergencyName || hasEmergencyPhone) {
+                Name newEmergencyName = null;
+                if (hasEmergencyName) {
+                    newEmergencyName = ParserUtil.parseName(argMultimap.getValue(PREFIX_EMERGENCY_NAME).get());
+                }
+                Phone newEmergencyPhone = null;
+                if (hasEmergencyPhone) {
+                    newEmergencyPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_EMERGENCY_PHONE).get());
+                }
+                EmergencyContact newEmergencyContact = new EmergencyContact(newEmergencyName, newEmergencyPhone);
+                editPersonDescriptor.setEmergencyContact(newEmergencyContact);
+            }
 
-        return new EditCommand(index, editPersonDescriptor);
+            if (argMultimap.getValue(PREFIX_ENROLL_YEAR).isPresent()) {
+                editPersonDescriptor.setEnrollmentYear(ParserUtil.parseEnrollmentYear(
+                        argMultimap.getValue(PREFIX_ENROLL_YEAR).get()));
+            }
+            parseRolesForEdit(argMultimap.getAllValues(PREFIX_ROLE)).ifPresent(editPersonDescriptor::setRoles);
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+
+            if (!editPersonDescriptor.isAnyFieldEdited()) {
+                throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+            }
+
+            return new EditCommand(index, editPersonDescriptor);
+        } catch (ParseException pe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
+        }
     }
 
     /**

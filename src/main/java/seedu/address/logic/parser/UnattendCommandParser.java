@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.logic.parser.ParserUtil.parseIndex;
 import static seedu.address.logic.parser.ParserUtil.parseIndexes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -32,16 +33,30 @@ public class UnattendCommandParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UnattendCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON, PREFIX_EVENT);
+        try {
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PERSON, PREFIX_EVENT);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_PERSON, PREFIX_EVENT)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE));
+            List<String> prefixes = new ArrayList<>();
+            if (!arePrefixesPresent(argMultimap, PREFIX_PERSON)) {
+                prefixes.add(PREFIX_PERSON.getPrefix());
+            }
+            if (!arePrefixesPresent(argMultimap, PREFIX_EVENT)) {
+                prefixes.add(PREFIX_EVENT.getPrefix());
+            }
+            if (!prefixes.isEmpty()) {
+                throw new ParseException(
+                        String.format(AddCommandParser.ERROR_MESSAGE_MISSING_COMPULSORY_PREFIX,
+                                String.join(", ", prefixes)));
+            }
+
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PERSON, PREFIX_EVENT);
+
+            Index eventIndex = parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
+            List<Index> personIndexes = parseIndexes(argMultimap.getValue(PREFIX_PERSON).get());
+            return new UnattendCommand(eventIndex, personIndexes);
+        } catch (ParseException pe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE), pe);
         }
-
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_PERSON, PREFIX_EVENT);
-
-        Index eventIndex = parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
-        List<Index> personIndexes = parseIndexes(argMultimap.getValue(PREFIX_PERSON).get());
-        return new UnattendCommand(eventIndex, personIndexes);
     }
 }

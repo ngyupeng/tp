@@ -16,8 +16,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DURATION_TRAINI
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_MEETING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_TRAINING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
@@ -27,11 +25,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_EVENT;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
-import seedu.address.model.event.Duration;
-import seedu.address.model.event.EventName;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
 public class EditEventCommandParserTest {
@@ -49,7 +44,7 @@ public class EditEventCommandParserTest {
         assertParseFailure(parser, VALID_NAME_MEETING, MESSAGE_INVALID_FORMAT);
 
         // no field specified
-        assertParseFailure(parser, "1", EditEventCommand.MESSAGE_NOT_EDITED);
+        assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
@@ -72,16 +67,16 @@ public class EditEventCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_EVENT_NAME_DESC, EventName.MESSAGE_CONSTRAINTS); // invalid event name
-        assertParseFailure(parser, "1" + INVALID_DURATION_DESC, Duration.MESSAGE_CONSTRAINTS); // invalid duration
+        assertParseFailure(parser, "1" + INVALID_EVENT_NAME_DESC, MESSAGE_INVALID_FORMAT); // invalid event name
+        assertParseFailure(parser, "1" + INVALID_DURATION_DESC, MESSAGE_INVALID_FORMAT); // invalid duration
 
         // invalid name followed by valid duration
         assertParseFailure(parser, "1" + INVALID_EVENT_NAME_DESC + DURATION_DESC_MEETING,
-                EventName.MESSAGE_CONSTRAINTS);
+                MESSAGE_INVALID_FORMAT);
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_EVENT_NAME_DESC + INVALID_DURATION_DESC,
-                EventName.MESSAGE_CONSTRAINTS);
+                MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -135,26 +130,26 @@ public class EditEventCommandParserTest {
         Index targetIndex = INDEX_FIRST_EVENT;
         String userInput = targetIndex.getOneBased() + INVALID_DURATION_DESC + DURATION_DESC_TRAINING;
 
-        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_DURATION));
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
 
         // invalid followed by valid
         userInput = targetIndex.getOneBased() + DURATION_DESC_TRAINING + INVALID_DURATION_DESC;
 
-        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_DURATION));
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
 
         // multiple valid fields repeated
         userInput = targetIndex.getOneBased() + NAME_DESC_MEETING + NAME_DESC_TRAINING
                 + DURATION_DESC_MEETING + DURATION_DESC_TRAINING + DESC_DESC_MEETING + DESC_DESC_TRAINING;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_DURATION, PREFIX_DESCRIPTION));
+                MESSAGE_INVALID_FORMAT);
 
         // multiple invalid values
         userInput = targetIndex.getOneBased() + INVALID_DURATION_DESC + INVALID_EVENT_NAME_DESC
                 + INVALID_DURATION_DESC + INVALID_EVENT_NAME_DESC;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_DURATION, PREFIX_NAME));
+                MESSAGE_INVALID_FORMAT);
     }
 
     @Test

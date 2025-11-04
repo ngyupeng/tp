@@ -445,6 +445,16 @@ This is currently not a major priority, since users can easily locate the source
 **Q**: I would like to report a bug / give feedback for the product. Where can I do so?<br>
 **A**: Please raise an issue on our <a href="https://github.com/AY2526S1-CS2103T-T10-4/tp/issues">GitHub</a> page.
 
+**Q**: How do I undo accidental deletion of persons or events?<br>
+**A**: We do not currently support undo-ing deletion. However, you may manually backup your data by making a copy of the
+data file in `[JAR file location]/data/addressbook.json` and storing it somewhere else. You may then restore that copy
+by copying it back into `[JAR file location]/data/addressbook.json`.
+
+**Q**: Does CCAmper still work if I move the jar file to another folder?<br>
+**A**: Yes CCAmper will still function, but take note that the saved data is stored relative to the jar file. To keep
+your data, please move the entire folder contents including the `data` subfolder along with the jar file, instead of
+the jar file alone.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues

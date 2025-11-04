@@ -14,12 +14,9 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.MultiPredicate;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.role.Role;
 import seedu.address.model.role.RolesContainSubstringsPredicate;
 import seedu.address.model.tag.TagsContainKeywordsPredicate;
 
@@ -42,7 +39,7 @@ public class FindCommandParserTest {
         // multiple prefix specified
         assertParseFailure(parser, " n/"
                         + " \n Alice \n  \t" + " n/" + "Bob",
-                Messages.getErrorMessageForDuplicatePrefixes(new Prefix("n/")));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
 
         // no keywords
         assertParseFailure(parser, " n/",
@@ -102,7 +99,8 @@ public class FindCommandParserTest {
     @Test
     public void parse_prefixRoleInvalidArgs_failure() {
         // non alpha numeric value
-        assertParseFailure(parser, " " + PREFIX_ROLE + "(Leader)", Role.FIND_MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, " " + PREFIX_ROLE + "(Leader)",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -112,7 +110,8 @@ public class FindCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
 
         // invalid name
-        assertParseFailure(parser, INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_NAME_DESC,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + PREFIX_NAME + NAME_DESC_BOB,
